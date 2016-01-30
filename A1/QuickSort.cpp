@@ -73,10 +73,16 @@ int main(int argc, char const *argv[])
 
 void QuickSort(int* &arr, int arrSize)
 {
+	//Index references to the current position in quicksort
 	int leftIndex;
 	int rightIndex;
 
 	int pivot;
+
+/***************************************************************************\
+FOR QUICKSORT, IF SIZE OF ARRAY IS LESS THAN 3, PERFORM SIMPLE CHECK AND
+SWAP IF NECESSARY. IF SIZE IS 1, RETURN THE 1 ELEMENT.
+/***************************************************************************/
 
 	if (arrSize < 3)
 	{
@@ -94,25 +100,46 @@ void QuickSort(int* &arr, int arrSize)
 		}
 	}
 
+/***************************************************************************\
+STARTING QUICKSORT, FIRST NEED IS THE PIVOT. USING THE MEDIAN OF THREE,
+THE FUNCTION FindPivot FINDS THE PIVOT AND PLACES IT AT THE END OF THE ARRAY.
+/***************************************************************************/
+
 	pivot = FindPivot(arr, arrSize);
 
 	leftIndex = 0;
 	rightIndex = arrSize - 2;
 
+/***************************************************************************\
+AFTER DECLARING THE INITIAL INDICES OF OUR REFERENCES, THE QUICKSORT
+ALGORITHM BEGINS TO PROCESS HERE. THE CONCEPT OF QUICKSORT IS TO PLACE THE
+LARGER VALUES THAN THE PIVOT TO THE FAR RIGHT, AND THE SMALLER VALUES TO THE
+FAR LEFT, UNTIL THE REFERENCE POINTERS CROSS OVER. ONCE THEY HAVE CROSSED
+OVER, MOVE THE PIVOT IN BETWEEN THE REFENCE POINTS. SPLIT THE ARRAY INTO TWO
+SUB-ARRAYS AND PERFORM QUICKSORT ON THEM.
+/***************************************************************************/
+
 	while (leftIndex <= rightIndex)
 	{
 		while (arr[leftIndex] <= pivot && leftIndex < arrSize -1)
 		{
+			//For as long as the left reference point is not past the end of the array
+			//and the value at the reference point is less than the pivot continue
+			//along the array.
 			leftIndex++;
 		}
 
 		while (arr[rightIndex] > pivot && rightIndex > 0)
 		{
+			//For as long as the right reference point is not past the beginning of the array
+			//and the value at the reference point is greater than the pivot continue
+			//along the array.
 			rightIndex--;
 		}
 
 		if (leftIndex < rightIndex)
 		{
+			//If the indices haven't crossed, swap the values and keep going.
 			Swap(arr, leftIndex, rightIndex);
 
 			leftIndex++;
@@ -120,10 +147,14 @@ void QuickSort(int* &arr, int arrSize)
 		}
 		else if (leftIndex == 0 && rightIndex == 0)
 		{
+			//Case where the indices are both pointing at the beginning of the array.
+			//Exit and continue to follow the steps
 			break;
 		}
 		else if (leftIndex == arrSize - 1 && rightIndex == arrSize - 1)
 		{
+			//Case where the indices are both pointing at the end of the array.
+			//Exit and continue to follow the steps
 			break;
 		}
 	}
@@ -131,7 +162,9 @@ void QuickSort(int* &arr, int arrSize)
 	Swap(arr, arrSize - 1, leftIndex);
 
 	if (leftIndex == 0 && rightIndex == 0)
+	{
 		rightIndex--;
+	}
 
 	//Create two subarrays
 	int* leftArr = new int[rightIndex + 1];
@@ -147,11 +180,22 @@ void QuickSort(int* &arr, int arrSize)
 		rightArr[i] = arr[i + leftIndex + 1];
 	}
 
+/***************************************************************************\
+USING THREADS TO SORT THE TWO SUB-ARRAYS WILL MAKE THE PROGRAM RUN FASTER.
+TO ENSURE THAT THE FUNCTIONS DO NOT TRY TO MOVE BACK TO THE MAIN BEFORE THE
+OTHER FINISHES, JOIN THE THREADS TO THE PROCESS.
+/***************************************************************************/
+
 	thread t1(QuickSort,leftArr, rightIndex + 1);
 	thread t2(QuickSort,rightArr, arrSize - leftIndex - 1);
 	
 	t1.join();
 	t2.join();
+
+/***************************************************************************\
+ONCE SORTING OF THE SUB-ARRAYS IS COMPLETE, PLACE THE SORT VALUES BACK INTO
+THEIR ORIGICAL ARRAY, COMPLETELY SORTED.
+/***************************************************************************/
 
 	int arrIndex = 0;
 	
@@ -169,9 +213,6 @@ void QuickSort(int* &arr, int arrSize)
 		arr[arrIndex] = rightArr[j];
 		arrIndex++;
 	}
-	
-	//Create 2 threads
-	//Call quicksort on both threads
 
 	return;
 }
