@@ -59,7 +59,7 @@ int main(int argc, char const *argv[])
 	outputFile.open(argv[2]);
 
 	//Call quicksort using a thread
-	thread t(QuickSort,elements, numberOfElements);
+	thread t(QuickSort, elements, numberOfElements);
 	t.join();
 
 	//Fill output file with sorted elements
@@ -186,15 +186,15 @@ TO ENSURE THAT THE FUNCTIONS DO NOT TRY TO MOVE BACK TO THE MAIN BEFORE THE
 OTHER FINISHES, JOIN THE THREADS TO THE PROCESS.
 /***************************************************************************/
 
-	thread t1(QuickSort,leftArr, rightIndex + 1);
-	thread t2(QuickSort,rightArr, arrSize - leftIndex - 1);
+	thread t1(QuickSort, leftArr, rightIndex + 1);
+	thread t2(QuickSort, rightArr, arrSize - leftIndex - 1);
 	
 	t1.join();
 	t2.join();
 
 /***************************************************************************\
 ONCE SORTING OF THE SUB-ARRAYS IS COMPLETE, PLACE THE SORT VALUES BACK INTO
-THEIR ORIGICAL ARRAY, COMPLETELY SORTED.
+THEIR ORIGINAL ARRAY, COMPLETELY SORTED.
 /***************************************************************************/
 
 	int arrIndex = 0;
