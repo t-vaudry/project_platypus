@@ -1,4 +1,5 @@
 #include <iostream>
+#include "State.h"
 
 class Process
 {
@@ -6,7 +7,7 @@ private:
 	int readyTime;
 	int serviceTime;
 	int remainingTime;
-	State state;
+	IState *state;
 public:
 	Process();
 	~Process();
@@ -18,4 +19,4 @@ public:
 	void setRemainingTime(int);
 	void Suspend();
 	void Wake();
-}
+};

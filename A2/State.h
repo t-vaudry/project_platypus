@@ -1,12 +1,6 @@
-#include <iostream>
 
-using namespace std;
-
-class State
+__interface IState
 {
-public:
-	State();
-	virtual ~State() = 0;
-	virtual void execute() = 0;
-	virtual void nextState() = 0;
-}
+	virtual void execute();
+	virtual void nextState();
+};

@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Process.h"
+#include "Suspended.h"
+#include "Ready.h"
 
 using namespace std;
 
@@ -8,47 +10,47 @@ Process::Process()
 	readyTime = 0;
 	serviceTime = 0;
 	remainingTime = 0;
-	state = new Ready;
+	state = new Ready();
 }
 
-Process:~Process()
+Process::~Process()
 {
 }
 
-int Process::getReadyTime()
-{
-	return readyTime;
-}
+		int Process::getReadyTime()
+		{
+			return readyTime;
+		}
 
-void Process::setReadyTime(int time)
-{
-	readyTime = time;
-}
+		void Process::setReadyTime(int time)
+		{
+			readyTime = time;
+		}
 
-int Process::getServiceTime()
-{
-	return serviceTime;
-}
+		int Process::getServiceTime()
+		{
+			return serviceTime;
+		}
 
-void Process::setRemainingTime(int time)
-{
-	serviceTime = time;
-}
+		void Process::setRemainingTime(int time)
+		{
+			serviceTime = time;
+		}
 
-int Process::getRemainingTime()
-{
-	return remainingTime;
-}
+		int Process::getRemainingTime()
+		{
+			return remainingTime;
+		}
 
-void Process::setRemainingTime(int time)
-{
-	remainingTime = time;
-}
+		void Process::setRemainingTime(int time)
+		{
+			remainingTime = time;
+		}
 
-void Process::Suspend()
-{
-}
+		void Process::Suspend()
+		{
+		}
 
-void Process::Wake()
-{
-}
+		void Process::Wake()
+		{
+		}
