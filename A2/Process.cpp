@@ -40,15 +40,15 @@ int Process::getRemainingTime()
 	return remainingTime;
 }
 
+void Process::setRemainingTime(int time)
+{
+	remainingTime = time;
+}
+
 void Process::Suspend()
 {
 }
 
 void Process::Wake()
 {
-}
-
-void Process::setRemainingTime(int time)
-{
-	remainingTime = time;
 }
