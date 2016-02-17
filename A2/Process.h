@@ -16,4 +16,6 @@ public:
 	void setServiceTime(int);
 	int getRemainingTime();
 	void setRemainingTime(int);
+	void Suspend();
+	void Wake();
 }
