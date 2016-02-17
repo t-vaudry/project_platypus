@@ -7,36 +7,40 @@ Process::Process()
 {
 	readyTime = 0;
 	serviceTime = 0;
+	remainingTime = 0;
+	state = new Ready;
 }
 
 Process:~Process()
 {
 }
 
-int Process::GetReadyTime()
+int Process::getReadyTime()
 {
 	return readyTime;
 }
 
-void Process::SetReadyTime(int time)
+void Process::setReadyTime(int time)
 {
 	readyTime = time;
 }
 
-int Process::GetServiceTime()
+int Process::getServiceTime()
 {
 	return serviceTime;
 }
 
-void Process::SetServiceTime(int time)
+void Process::setRemainingTime(int time)
 {
 	serviceTime = time;
 }
 
-void Process::Suspend()
+int Process::getRemainingTime()
 {
+	return remainingTime;
 }
 
-void Process::Wake()
+void Process::setRemainingTime(int time)
 {
+	remainingTime = time;
 }

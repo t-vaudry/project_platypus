@@ -5,13 +5,15 @@ class Process
 private:
 	int readyTime;
 	int serviceTime;
+	int remainingTime;
+	State state;
 public:
 	Process();
 	~Process();
-	int GetReadyTime();
-	void SetReadyTime(int);
-	int GetServiceTime();
-	void SetServiceTime(int);
-	void Suspend();
-	void Wake();
+	int getReadyTime();
+	void setReadyTime(int);
+	int getServiceTime();
+	void setServiceTime(int);
+	int getRemainingTime();
+	void setRemainingTime(int);
 }
