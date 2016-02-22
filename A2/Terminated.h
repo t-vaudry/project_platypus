@@ -1,12 +1,13 @@
 #pragma once
 #include "State.h"
 class Terminated :
-	public IState
+	public State
 {
+private:
+	int counter;
 public:
 	Terminated();
 	~Terminated();
-	void execute();
-	void nextState();
+	void execute(int, char, int, const char*);
 };
 

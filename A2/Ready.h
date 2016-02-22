@@ -1,12 +1,11 @@
 #pragma once
 #include "State.h"
 class Ready :
-	public IState
+	public State
 {
 public:
 	Ready();
 	~Ready();
-	void execute();
-	void nextState();
+	void execute(int, char, int, const char*);
 };
 

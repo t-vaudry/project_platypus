@@ -1,9 +1,8 @@
 #pragma once
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
-#include "User.h"
 
 using namespace std;
 
@@ -15,7 +14,7 @@ private:
 public:
 	IOManager();
 	~IOManager();
-	void Write(char*);
-	void Read(User* &);
+	void Write(string, const char*);
+	string Read(const char*);
 };
 

@@ -1,21 +1,24 @@
 #pragma once
 #include "User.h"
 #include "IOManager.h"
+#include <vector>
 class Scheduler
 {
 private:
-	User* users;
-	IOManager input_output_manager;
+	vector<User> users;
+	IOManager IO;
 	int timeQuantum;
 
 
 public:
 	Scheduler();
 	~Scheduler();
-	User* GetUsers();
-	void SetUsers(User*);
+	vector<User> GetUsers();
+	void SetUsers(vector<User>);
 	int GetTimeQuantum();
 	void SetTimeQuantum(int);
-	void Run();
+	void Run(const char*);
+	thread RunThread(const char*);
 };
+
 

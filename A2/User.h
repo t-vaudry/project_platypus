@@ -1,18 +1,25 @@
 #pragma once
 #include "Process.h"
+#include <string>
+#include <vector>
+
+using namespace std;
+
 class User
 {
 private:
-	char name;
+	string name;
 	int numberOfProcesses;
 	Process* processList;
 
 public:
 	User();
 	~User();
-	char GetName();
+	User(string, int, Process*);
+	string GetName();
 	void SetName(char);
 	int GetNumberOfProcesses();
 	void SetNumberOfProcesses(int);
+	bool IsActive();
+	int ActiveProcesses();
 };
-

@@ -1,7 +1,5 @@
 #include "IOManager.h"
 
-
-
 IOManager::IOManager()
 {
 }
@@ -10,24 +8,64 @@ IOManager::~IOManager()
 {
 }
 
-void IOManager::Write(char* c)
+void IOManager::Write(string line, const char* path)
 {
-	if (!outputFile)
+	//Open input file
+	ofstream outputFile;
+	outputFile.open(path);
+
+	try
 	{
-		//outputFile.open('a');
+		if (!outputFile)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
 	}
 
-	outputFile << c << endl;
+	outputFile << line << endl;
+
+	outputFile.close();
 
 }
 
-void IOManager::Read(User* &users)
+string IOManager::Read(const char* path)
 {
-	//Get number of users
-	//Foreach user:
-	//-Get number of processes
-	//-Foreach process
-	//Get readyTime
-	//Get serviceTime
-	//Set for each user
+	//Open input file
+	ifstream inputFile;
+	inputFile.open(path);
+
+	try
+	{
+		if (!inputFile)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
+
+
+	string returnValue;
+	while (!inputFile.eof())
+	{
+		string input;
+		getline(inputFile, input);
+		returnValue.append(input);
+		returnValue.append("\n");
+	}
+
+
+	inputFile.close();
+
+	return returnValue;
 }
