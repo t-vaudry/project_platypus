@@ -8,15 +8,16 @@ Process::Process()
 	readyTime = 0;
 	serviceTime = 0;
 	remainingTime = 0;
-	state = new Ready();
+	state = new Inactive();
 }
 
-Process::Process(int ready, int service)
+Process::Process(int ready, int service, int id)
 {
 	readyTime = ready;
 	serviceTime = service;
 	remainingTime = service;
-	state = new Ready();
+	ID = id;
+	state = new Inactive();
 }
 
 Process::~Process()
@@ -61,9 +62,16 @@ int Process::getState()
 		return 1;
 	else if (dynamic_cast<Running*>(state))
 		return 2;
-	else 
-		return 3; //Suspended
+	else if (dynamic_cast<Suspended*>(state))
+		return 3;
+	else
+		return 4;//inactive
 
+}
+
+int Process::getID()
+{
+	return ID;
 }
 
 void Process::Suspend()
@@ -83,6 +91,20 @@ void Process::Wake(int time, char user, int process, char* path)
 	state = new Running();
 }
 
+void Process::Activate()
+{
+	try 
+	{
+		if (!dynamic_cast<Inactive*>(state))
+			throw "ERROR";
+	}
+	catch (char* s)
+	{
+		cout << s;
+	}
+
+	state = new Ready();
+}
 void Process::Terminate()
 {
 	state = new Terminated();
@@ -90,7 +112,7 @@ void Process::Terminate()
 
 bool Process::IsActive()
 {
-	if (getState() != 1)
+	if (getState() != 1 && getState() != 4)
 		return true;
 	else
 		return false;
@@ -104,4 +126,30 @@ Process& Process::operator=(Process& p)
 	state = p.state;
 
 	return p;
+}
+
+void Process::Run(int currentTime, char user, int process, char* path)
+{
+	while (true)
+	{
+		state->execute(currentTime, user, process, path);
+
+		if (dynamic_cast<Running*>(state))
+		{
+			remainingTime--;
+		}
+
+		if (remainingTime == 0)
+		{
+			state = new Terminated();
+		}
+
+		currentTime++;
+	}
+}
+
+void Process::Initiate(int currentTime, char user, int process, const char* path)
+{
+	thread processThread (&Process::Run, currentTime, user, process, path, Process());
+	processThread.join();
 }

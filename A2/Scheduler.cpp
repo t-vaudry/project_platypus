@@ -7,6 +7,7 @@ using namespace std;
 
 Scheduler::Scheduler()
 {
+	currentTime = 1;
 }
 
 Scheduler::~Scheduler()
@@ -73,7 +74,7 @@ void Scheduler::Run(const char* path)
 			string service;
 			getline(inputStream, service);
 
-			Process p(stoi(start), stoi(service));
+			Process p(stoi(start), stoi(service), i);
 
 			processes[i] = p;
 			//processes[i].join(); to do
@@ -82,27 +83,59 @@ void Scheduler::Run(const char* path)
 		//Create users
 		User u(n, numInt, processes);
 		users.push_back(u);
+
+		for (int i = 0; i < users.size(); i++)
+		{
+			Process* userProcesses = users[i].GetAllProcesses();
+			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
+				userProcesses[j].Initiate(currentTime, users[i].GetName()[0], userProcesses[j].getID(), path);
+		}
 	}
 
-	//Get number of active users
-	int activeUsers = 0;
-	for (int i = 0; i < users.size(); i++)
-		if (users[i].IsActive())
-			activeUsers++;
-
-	//Get time quantum per user
-	int timePerUser = timeQuantum / activeUsers;
-
+	int numberOfFinishedUsers = 0;
 
 	//Get number of active processes for each user
-	for (int i = 0; i < users.size(); i++)
+	while (numberOfFinishedUsers < users.size())
 	{
-		int timePerProcess = timePerUser / users[i].ActiveProcesses();
+		while(currentTime%timeQuantum != 0)
+		{
+			//foreach user. foreach process. if arrival time == current time, state = ready
+			for (int i = 0; i < users.size(); i++)
+			{
+				Process* pList = users[i].GetAllProcesses();
+				for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
+				{
+					if (pList[j].getReadyTime() == currentTime)
+						pList[j].Activate();
+				}
+			}
 
+			//Get number of active users
+			int activeUsers = 0;
+			for (int i = 0; i < users.size(); i++)
+				if (users[i].IsActive())
+					activeUsers++;
+
+			//Get time quantum per user
+			int timePerUser = timeQuantum / activeUsers;
+
+			for (int i = 0; i < users.size(); i++)
+			{
+				if (users[i].Completed())
+				{
+					numberOfFinishedUsers++;
+				}
+
+				Process* p = users[i].GetActiveProcesses();
+
+				for (int j = 0; j < users[i].ActiveProcesses(); j++)
+				{
+					int timePerProcess = timePerUser / users[i].ActiveProcesses();
+				}
+
+
+				//wait for time quantum
+			}
+		}
 	}
-}
-
-thread Scheduler::RunThread(const char* path)
-{
-	return std::thread([=] { Run(path); });
 }

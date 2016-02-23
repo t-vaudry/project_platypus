@@ -41,7 +41,7 @@ bool User::IsActive()
 	bool active = false;
 	for (int i = 0; i < numberOfProcesses; i++)
 	{
-		if (processList[i].getState() != 1)
+		if (processList[i].getState() != 1 && processList[i].getState() != 4)
 		{
 			active = true;
 			break;
@@ -58,4 +58,33 @@ int User::ActiveProcesses()
 			num++;
 
 	return num;
+}
+
+Process* User::GetActiveProcesses()
+{
+	Process* p = new Process[ActiveProcesses()];
+	int counter = 0;
+	for (int i = 0; i < GetNumberOfProcesses(); i++)
+		if (processList[i].IsActive())
+		{
+			p[counter] = processList[i];
+			counter++;
+		}
+
+	return p;
+}
+
+Process* User::GetAllProcesses()
+{
+	return processList;
+}
+
+bool User::Completed()
+{
+	for (int i = 0; i < GetNumberOfProcesses(); i++)
+		if (processList[i].getState() != 1)
+		{
+			return false;
+		}
+	return true;
 }

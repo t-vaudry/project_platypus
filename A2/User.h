@@ -22,4 +22,7 @@ public:
 	void SetNumberOfProcesses(int);
 	bool IsActive();
 	int ActiveProcesses();
+	Process* GetActiveProcesses();
+	Process* GetAllProcesses();
+	bool Completed();
 };

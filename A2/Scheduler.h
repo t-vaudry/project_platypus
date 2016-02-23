@@ -8,7 +8,7 @@ private:
 	vector<User> users;
 	IOManager IO;
 	int timeQuantum;
-
+	int currentTime;
 
 public:
 	Scheduler();
