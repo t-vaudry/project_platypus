@@ -15,94 +15,94 @@ Scheduler::~Scheduler()
 
 vector<User> Scheduler::GetUsers()
 {
-	return users;
+    return users;
 }
 
 void Scheduler::SetUsers(vector<User> newUsers)
 {
-	users = newUsers;
+    users = newUsers;
 }
 
 int Scheduler::GetTimeQuantum()
 {
-	return timeQuantum;
+    return timeQuantum;
 }
 
 void Scheduler::SetTimeQuantum(int t)
 {
-	timeQuantum = t;
+    timeQuantum = t;
 }
 
 void Scheduler::Run(const char* path)
 {
-	string input;
-	input = IO.Read(path);
+    string input;
+    input = IO.Read(path);
 
-	stringstream inputStream(input);
+    stringstream inputStream(input);
 
-	//Parse input file
-	//Get time quantum
-	string timeQ;
-	getline(inputStream, timeQ);
-	timeQuantum = stoi(timeQ);
+    //Parse input file
+    //Get time quantum
+    string timeQ;
+    getline(inputStream, timeQ);
+    timeQuantum = stoi(timeQ);
 
-	int numInt;
+    int numInt;
 
-	//Get users
-	while (true)
-	{
-		//Get user name
-		string n;
-		getline(inputStream, n, ' ');
+    //Get users
+    while (true)
+    {
+        //Get user name
+        string n;
+        getline(inputStream, n, ' ');
 
-		if (n == "")
-			break;
+        if (n == "")
+            break;
 
-		//Get number of processes
-		string num;
-		getline(inputStream, num);
-		numInt = stoi(num);
+        //Get number of processes
+        string num;
+        getline(inputStream, num);
+        numInt = stoi(num);
 
-		//Create all processes
-		Process* processes = new Process[numInt];
-		for (int i = 0; i < numInt; i++)
-		{
-			string start;
-			getline(inputStream, start, ' ');
+        //Create all processes
+        Process* processes = new Process[numInt];
+        for (int i = 0; i < numInt; i++)
+        {
+            string start;
+            getline(inputStream, start, ' ');
 
-			string service;
-			getline(inputStream, service);
+            string service;
+            getline(inputStream, service);
 
-			Process p(stoi(start), stoi(service));
+            Process p(stoi(start), stoi(service));
 
-			processes[i] = p;
-			//processes[i].join(); to do
-		}
+            processes[i] = p;
+            //processes[i].join(); to do
+        }
 
-		//Create users
-		User u(n, numInt, processes);
-		users.push_back(u);
-	}
+        //Create users
+        User u(n, numInt, processes);
+        users.push_back(u);
+    }
 
-	//Get number of active users
-	int activeUsers = 0;
-	for (int i = 0; i < users.size(); i++)
-		if (users[i].IsActive())
-			activeUsers++;
+    //Get number of active users
+    int activeUsers = 0;
+    for (int i = 0; i < users.size(); i++)
+        if (users[i].IsActive())
+            activeUsers++;
 
-	//Get time quantum per user
-	int timePerUser = timeQuantum / activeUsers;
+    //Get time quantum per user
+    int timePerUser = timeQuantum / activeUsers;
 
 
-	//Get number of active processes for each user
-	for (int i = 0; i < users.size(); i++)
-	{
-		int timePerProcess = timePerUser / users[i].ActiveProcesses();
+    //Get number of active processes for each user
+    for (int i = 0; i < users.size(); i++)
+    {
+        int timePerProcess = timePerUser / users[i].ActiveProcesses();
 
-	}
+    }
 }
 
 thread Scheduler::RunThread(const char* path)
 {
-	return std::thread([=] { Run(path); });
+    return std::thread([=] { Run(path); });
 }

@@ -1,14 +1,14 @@
 #pragma once
 #include "State.h"
 class Suspended :
-	public State
+    public State
 {
 private:
-	int counter;
+    int counter;
 public:
-	Suspended();
-	~Suspended();
-	void execute(int, char, int, const char*);
+    Suspended();
+    ~Suspended();
+    void execute(int, char, int, const char*);
 };
 
 
