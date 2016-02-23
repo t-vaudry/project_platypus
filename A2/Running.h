@@ -1,13 +1,13 @@
 #pragma once
 #include "State.h"
 class Running :
-	public State
+    public State
 {
 private:
-	int counter;
+    int counter;
 public:
-	Running();
-	~Running();
-	void execute(int, char, int, const char*);
+    Running();
+    ~Running();
+    void execute(int, char, int, const char*);
 };
 
