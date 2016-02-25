@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <utility>
 
 using namespace std;
 
@@ -74,7 +75,7 @@ void Scheduler::Run(const char* path)
 			string service;
 			getline(inputStream, service);
 
-			Process p(stoi(start), stoi(service), i);
+			Process p(stoi(start), stoi(service), i, n[0]);
 
 			processes[i] = p;
 			//processes[i].join(); to do
@@ -88,54 +89,105 @@ void Scheduler::Run(const char* path)
 		{
 			Process* userProcesses = users[i].GetAllProcesses();
 			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
-				userProcesses[j].Initiate(currentTime, users[i].GetName()[0], userProcesses[j].getID(), path);
+				userProcesses[j].Initiate(currentTime, userProcesses[j].getID(), path);
 		}
 	}
 
 	int numberOfFinishedUsers = 0;
 
 	//Get number of active processes for each user
-	while (numberOfFinishedUsers < users.size())
+	while (true) //NEW CONDITION; should change
 	{
-		while(currentTime%timeQuantum != 0)
+		//foreach user. foreach process. if arrival time == current time, state = ready
+		for (int i = 0; i < users.size(); i++)
 		{
-			//foreach user. foreach process. if arrival time == current time, state = ready
-			for (int i = 0; i < users.size(); i++)
+			Process* pList = users[i].GetAllProcesses();
+			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
 			{
-				Process* pList = users[i].GetAllProcesses();
-				for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
-				{
-					if (pList[j].getReadyTime() == currentTime)
-						pList[j].Activate();
-				}
-			}
-
-			//Get number of active users
-			int activeUsers = 0;
-			for (int i = 0; i < users.size(); i++)
-				if (users[i].IsActive())
-					activeUsers++;
-
-			//Get time quantum per user
-			int timePerUser = timeQuantum / activeUsers;
-
-			for (int i = 0; i < users.size(); i++)
-			{
-				if (users[i].Completed())
-				{
-					numberOfFinishedUsers++;
-				}
-
-				Process* p = users[i].GetActiveProcesses();
-
-				for (int j = 0; j < users[i].ActiveProcesses(); j++)
-				{
-					int timePerProcess = timePerUser / users[i].ActiveProcesses();
-				}
-
-
-				//wait for time quantum
+				if (pList[j].getReadyTime() <= currentTime)
+					pList[j].Activate();
 			}
 		}
+
+		//Get number of active users
+		int activeUsers = 0;
+		for (int i = 0; i < users.size(); i++)
+			if (users[i].IsActive())
+				activeUsers++;
+
+		//if no users left, break
+		if(activeUsers == 0)
+			return;
+
+		//Get time quantum per user
+		int timePerUser = timeQuantum / activeUsers;
+		//create vector to pair active processes
+		vector<pair<Process*, int> > processMap;
+		pair<Process*, int> tmp;
+
+		for (int i = 0; i < users.size(); i++)
+		{
+			Process* p = users[i].GetActiveProcesses();
+
+			int timePerProcess = timePerUser / users[i].ActiveProcesses();
+
+			for (int j = 0; j < users[i].ActiveProcesses(); j++)
+			{
+				//set the runtime of each Process
+				p[j].setRunTime(timePerProcess);
+			}
+
+			tmp = make_pair(p,users[i].ActiveProcesses());
+			processMap.push_back(tmp);
+		}
+
+		int tmpProcessSize = 0;
+
+		for(int i = 0; i < processMap.size(); i++)
+		{
+			tmpProcessSize += get<1>(processMap[i]);
+		}
+
+		activeProcesses = new Process[tmpProcessSize];
+
+		for(int i = 0; i < tmpProcessSize;)
+		{
+			for(int j = 0; j < ProcessMap.size(); j++)
+			{
+				for(int k = 0; k < ProcessMap[j].second; k++)
+				{
+					activeProcesses[i] = ProcessMap[j].first[k];
+					i++;
+				}
+
+			}
+		}
+
+		for(int i = 0; i < tmpProcessSize; i++)
+		{
+			if( i != 0 )
+			{
+				p[i-1].Suspend();
+				if(p[i-1].getRemainingTime() == 0)
+				{
+					p[i-1].Terminate();
+				}
+			}
+
+			activeProcesses[i].Wake(currentTime, path);
+			if(activeProcesses[i].getRunTime() >= activeProcesses[i].getRemainingTime())
+			{
+				_sleep(activeProcesses[i].getRemainingTime() * 1000);
+				activeProcesses[i].setRemainingTime(0);
+				currentTime += activeProcesses[i].getRemainingTime();
+			}
+			else
+			{
+				_sleep(activeProcesses[i].getRunTime() * 1000);
+				activeProcesses[i].setRemainingTime(activeProcesses[i].getRemainingTime()-activeProcess[i].getRunTime());
+				currentTime += activeProcesses[i].getRunTime();
+			}
+		}
+
 	}
 }

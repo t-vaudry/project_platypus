@@ -17,8 +17,10 @@ private:
 	int readyTime;
 	int serviceTime;
 	int remainingTime;
+	int runTime;
 	State* state;
 	int ID;
+	char user;
 
 public:
 	Process();
@@ -30,14 +32,17 @@ public:
 	void setServiceTime(int);
 	int getRemainingTime();
 	void setRemainingTime(int);
+	int getRunTime();
+	void setRunTime(int);
 	int getState();
 	int getID();
+	char getUser();
 	void Suspend();
-	void Wake(int, char, int, char*);
+	void Wake(int, const char*);
 	void Activate();
 	void Terminate();
 	bool IsActive();
 	Process& operator=(Process&);
-	void Run(int, char, int, char*);
-	void Initiate(int, char, int, const char*);
+	void Run(int, char*);
+	void Initiate(int, const char*);
 };

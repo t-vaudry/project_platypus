@@ -8,15 +8,19 @@ Process::Process()
 	readyTime = 0;
 	serviceTime = 0;
 	remainingTime = 0;
+	runTime = 0;
+	ID = 0;
+	user = NULL;
 	state = new Inactive();
 }
 
-Process::Process(int ready, int service, int id)
+Process::Process(int ready, int service, int id, char usr)
 {
 	readyTime = ready;
 	serviceTime = service;
 	remainingTime = service;
 	ID = id;
+	user = usr;
 	state = new Inactive();
 }
 
@@ -54,6 +58,16 @@ void Process::setRemainingTime(int time)
 	remainingTime = time;
 }
 
+int Process::getRunTime()
+{
+	return runTime;
+}
+
+void Process::setRunTime(int time)
+{
+	runTime = time;
+}
+
 int Process::getState()
 {
 	if (dynamic_cast<Ready*>(state))
@@ -74,17 +88,22 @@ int Process::getID()
 	return ID;
 }
 
+char Process::getUser()
+{
+	return user;
+}
+
 void Process::Suspend()
 {
 	state = new Suspended();
 }
 
-void Process::Wake(int time, char user, int process, char* path)
+void Process::Wake(int time, const char* path)
 {
 	if (dynamic_cast<Ready*>(state))
 	{
 		IOManager IO;
-		string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(process) + ", Started \n";
+		string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Started \n";
 		IO.Write(line, path);
 	}
 
@@ -105,6 +124,7 @@ void Process::Activate()
 
 	state = new Ready();
 }
+
 void Process::Terminate()
 {
 	state = new Terminated();
@@ -128,28 +148,17 @@ Process& Process::operator=(Process& p)
 	return p;
 }
 
-void Process::Run(int currentTime, char user, int process, char* path)
+void Process::Run(int currentTime, char* path)
 {
 	while (true)
 	{
-		state->execute(currentTime, user, process, path);
-
-		if (dynamic_cast<Running*>(state))
-		{
-			remainingTime--;
-		}
-
-		if (remainingTime == 0)
-		{
-			state = new Terminated();
-		}
-
+		state->execute(currentTime, user, ID, path);
 		currentTime++;
 	}
 }
 
-void Process::Initiate(int currentTime, char user, int process, const char* path)
+void Process::Initiate(int currentTime, const char* path)
 {
-	thread processThread (&Process::Run, currentTime, user, process, path, Process());
+	thread processThread (&Process::Run, currentTime, path, Process());
 	processThread.join();
 }
