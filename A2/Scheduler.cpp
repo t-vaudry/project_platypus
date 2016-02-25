@@ -89,7 +89,7 @@ void Scheduler::Run(const char* path)
 		{
 			Process* userProcesses = users[i].GetAllProcesses();
 			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
-				userProcesses[j].Initiate(currentTime, userProcesses[j].getID(), path);
+				userProcesses[j].Initiate(currentTime, path);
 		}
 	}
 
@@ -152,11 +152,11 @@ void Scheduler::Run(const char* path)
 
 		for(int i = 0; i < tmpProcessSize;)
 		{
-			for(int j = 0; j < ProcessMap.size(); j++)
+			for(int j = 0; j < processMap.size(); j++)
 			{
-				for(int k = 0; k < ProcessMap[j].second; k++)
+				for(int k = 0; k < processMap[j].second; k++)
 				{
-					activeProcesses[i] = ProcessMap[j].first[k];
+					activeProcesses[i] = processMap[j].first[k];
 					i++;
 				}
 
@@ -167,10 +167,10 @@ void Scheduler::Run(const char* path)
 		{
 			if( i != 0 )
 			{
-				p[i-1].Suspend();
-				if(p[i-1].getRemainingTime() == 0)
+				activeProcesses[i-1].Suspend();
+				if(activeProcesses[i-1].getRemainingTime() == 0)
 				{
-					p[i-1].Terminate();
+					activeProcesses[i-1].Terminate();
 				}
 			}
 
@@ -184,7 +184,7 @@ void Scheduler::Run(const char* path)
 			else
 			{
 				_sleep(activeProcesses[i].getRunTime() * 1000);
-				activeProcesses[i].setRemainingTime(activeProcesses[i].getRemainingTime()-activeProcess[i].getRunTime());
+				activeProcesses[i].setRemainingTime(activeProcesses[i].getRemainingTime()-activeProcesses[i].getRunTime());
 				currentTime += activeProcesses[i].getRunTime();
 			}
 		}

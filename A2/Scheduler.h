@@ -9,7 +9,7 @@ private:
 	IOManager IO;
 	int timeQuantum;
 	int currentTime;
-	Process* activeProcesses();
+	Process* activeProcesses;
 
 public:
 	Scheduler();

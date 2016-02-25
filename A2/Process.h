@@ -25,7 +25,7 @@ private:
 public:
 	Process();
 	~Process();
-	Process(int, int, int);
+	Process(int, int, int, char);
 	int getReadyTime();
 	void setReadyTime(int);
 	int getServiceTime();
