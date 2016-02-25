@@ -1,5 +1,5 @@
 #include "Terminated.h"
-
+#include <Windows.h>
 
 Terminated::Terminated()
 {
@@ -20,6 +20,6 @@ void Terminated::execute(int time, char user, int process, const char* path)
 		IO.Write(line, path);
 	}
 	counter++;
-	_sleep(1000);
+	Sleep(1000);
 
 }

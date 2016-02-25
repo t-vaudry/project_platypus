@@ -1,5 +1,5 @@
 #include "Suspended.h"
-
+#include <Windows.h>
 
 Suspended::Suspended()
 {
@@ -20,5 +20,5 @@ void Suspended::execute(int time, char user, int process, const char* path)
 		IO.Write(line, path);
 	}
 	counter++;
-	_sleep(1000);
+	Sleep(1000);
 }

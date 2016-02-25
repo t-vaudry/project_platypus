@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <utility>
+#include <Windows.h>
 
 using namespace std;
 
@@ -177,17 +178,22 @@ void Scheduler::Run(const char* path)
 			activeProcesses[i].Wake(currentTime, path);
 			if(activeProcesses[i].getRunTime() >= activeProcesses[i].getRemainingTime())
 			{
-				_sleep(activeProcesses[i].getRemainingTime() * 1000);
+				Sleep(activeProcesses[i].getRemainingTime() * 1000);
 				activeProcesses[i].setRemainingTime(0);
 				currentTime += activeProcesses[i].getRemainingTime();
 			}
 			else
 			{
-				_sleep(activeProcesses[i].getRunTime() * 1000);
+				Sleep(activeProcesses[i].getRunTime() * 1000);
 				activeProcesses[i].setRemainingTime(activeProcesses[i].getRemainingTime()-activeProcesses[i].getRunTime());
 				currentTime += activeProcesses[i].getRunTime();
 			}
 		}
 
 	}
+}
+
+thread Scheduler::RunThread(const char* path)
+{
+	return std::thread([=] { Run(path); });
 }

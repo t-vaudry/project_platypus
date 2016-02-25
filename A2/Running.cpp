@@ -1,5 +1,5 @@
 #include "Running.h"
-
+#include <Windows.h>
 
 Running::Running()
 {
@@ -20,5 +20,5 @@ void Running::execute(int time, char user, int process, const char* path)
 		IO.Write(line, path);
 	}
 	counter++;
-	_sleep(1000);
+	Sleep(1000);
 }
