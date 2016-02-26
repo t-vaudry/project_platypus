@@ -11,7 +11,7 @@ Suspended::~Suspended()
 {
 }
 
-void Suspended::execute(int time, char user, int process, const char* path)
+void Suspended::execute(int& time, char user, int process, const char* path)
 {
 	if (counter == 0)
 	{

@@ -6,6 +6,6 @@ class Inactive :
 public:
 	Inactive();
 	~Inactive();
-	void execute(int, char, int, const char*);
+	void execute(int&, char, int, const char*);
 };
 

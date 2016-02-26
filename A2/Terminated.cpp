@@ -11,7 +11,7 @@ Terminated::~Terminated()
 {
 }
 
-void Terminated::execute(int time, char user, int process, const char* path)
+void Terminated::execute(int& time, char user, int process, const char* path)
 {
 	if (counter == 0)
 	{

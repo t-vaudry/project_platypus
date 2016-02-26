@@ -8,6 +8,6 @@ private:
 public:
     Terminated();
     ~Terminated();
-    void execute(int, char, int, const char*);
+    void execute(int&, char, int, const char*);
 };
 

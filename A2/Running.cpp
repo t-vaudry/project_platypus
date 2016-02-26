@@ -11,7 +11,7 @@ Running::~Running()
 {
 }
 
-void Running::execute(int time, char user, int process, const char* path)
+void Running::execute(int& time, char user, int process, const char* path)
 {
 	if (counter == 0)
 	{

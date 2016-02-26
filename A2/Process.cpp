@@ -113,19 +113,8 @@ void Process::Wake(int time, const char* path)
 
 void Process::Activate()
 {
-	//try 
-	//{
-	//	if (!dynamic_cast<Inactive*>(state))
-	//		throw "ERROR";
-	//}
-	//catch (char* s)
-	//{
-	//	cout << s;
-	//}
 	if (dynamic_cast<Inactive*>(state))
 		state = new Ready();
-	else
-		cout << state << endl;
 }
 
 void Process::Terminate()
@@ -158,7 +147,7 @@ void Process::Run(int& currentTime, const char* path)
 {
 	while (true)
 	{
-		//state->execute(currentTime, user, ID, path);
+		state->execute(currentTime, user, ID, path);
 	}
 }
 
