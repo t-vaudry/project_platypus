@@ -69,7 +69,7 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 		numInt = stoi(num);
 
 		//Create all processes
-		Process* processes = new Process[numInt];
+		vector<Process*> processes;// = new Process[numInt];
 		for (int i = 0; i < numInt; i++)
 		{
 			string start;
@@ -78,9 +78,9 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 			string service;
 			getline(inputStream, service);
 
-			Process p(stoi(start), stoi(service), i, n[0]);
+			Process* p = new Process(stoi(start), stoi(service), i, n[0]);
 
-			processes[i] = p;
+			processes.push_back(p);
 			//processes[i].join(); to do
 		}
 
@@ -91,11 +91,13 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 
 	for (int i = 0; i < users.size(); i++)
 	{
-		Process* userProcesses = users[i].GetAllProcesses();
+		vector<Process*> userProcesses;// = users[i].GetAllProcesses();
+		userProcesses = users[i].GetAllProcesses();
+		
 		for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
 		{
 			//thread t = userProcesses[j].RunThread(currentTime, path);
-			processThreads.emplace_back(userProcesses[j].RunThread(currentTime, outputPath));
+			processThreads.push_back(userProcesses[j]->RunThread(currentTime, outputPath));
 			//userProcesses[j].Initiate(currentTime, path);
 		}
 	}
@@ -107,24 +109,16 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 	//Get number of active processes for each user
 	while (true) //NEW CONDITION; should change
 	{
-		////foreach user. foreach process. if arrival time == current time, state = ready
-		//for (int i = 0; i < users.size(); i++)
-		//{
-		//	Process* pList = users[i].GetAllProcesses();
-		//	for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
-		//	{
-		//		if (pList[j].getReadyTime() <= currentTime)
-		//			pList[j].Activate();
-		//	}
-		//}
 		//foreach user. foreach process. if arrival time == current time, state = ready
 		for (int i = 0; i < users.size(); i++)
 		{
-			Process* pList = users[i].GetAllProcesses();
+			vector<Process*> pList;// = users[i].GetAllProcesses();
+			pList = users[i].GetAllProcesses();
+
 			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
 			{
-				if (pList[j].getReadyTime() <= currentTime)
-					pList[j].Activate();
+				if (pList[j]->getReadyTime() <= currentTime)
+					pList[j]->Activate();
 			}
 		}
 		//Get number of active users
@@ -139,77 +133,52 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 
 		//Get time quantum per user
 		int timePerUser = timeQuantum / activeUsers;
-		//create vector to pair active processes
-		vector<pair<Process*, int> > processMap;
-		pair<Process*, int> tmp;
+		vector<Process*> activeProcesses;
 
 		for (int i = 0; i < users.size(); i++)
 		{
-			Process* p = users[i].GetActiveProcesses();
+			vector<Process*> p;// = users[i].GetActiveProcesses();
+			p = users[i].GetActiveProcesses();
 
 			if (users[i].ActiveProcesses() == 0)
 				break;
 
 			int timePerProcess = timePerUser / users[i].ActiveProcesses();
 
-			for (int j = 0; j < users[i].ActiveProcesses(); j++)
+			for (int j = 0; j < p.size(); j++)
 			{
 				//set the runtime of each Process
-				p[j].setRunTime(timePerProcess);
+				p[j]->setRunTime(timePerProcess);
+				activeProcesses.push_back(p[j]);
 			}
 
-			tmp = make_pair(p,users[i].ActiveProcesses());
-			processMap.push_back(tmp);
 		}
 
-		int tmpProcessSize = 0;
-
-		for(int i = 0; i < processMap.size(); i++)
-		{
-			tmpProcessSize += get<1>(processMap[i]);
-		}
-
-		activeProcesses = new Process[tmpProcessSize];
-
-		for(int i = 0; i < tmpProcessSize;)
-		{
-			for(int j = 0; j < processMap.size(); j++)
-			{
-				for(int k = 0; k < processMap[j].second; k++)
-				{
-					activeProcesses[i] = processMap[j].first[k];
-					i++;
-				}
-
-			}
-		}
-
-		for(int i = 0; i < tmpProcessSize; i++)
+		for(int i = 0; i < activeProcesses.size(); i++)
 		{
 			if( i != 0 )
 			{
-				activeProcesses[i-1].Suspend();
-				if(activeProcesses[i-1].getRemainingTime() == 0)
+				activeProcesses[i-1]->Suspend();
+				if(activeProcesses[i-1]->getRemainingTime() == 0)
 				{
-					activeProcesses[i-1].Terminate();
+					activeProcesses[i-1]->Terminate();
 				}
 			}
 
-			activeProcesses[i].Wake(currentTime, outputPath);
-			if(activeProcesses[i].getRunTime() >= activeProcesses[i].getRemainingTime())
+			activeProcesses[i]->Wake(currentTime, outputPath);
+			if(activeProcesses[i]->getRunTime() >= activeProcesses[i]->getRemainingTime())
 			{
-				Sleep(activeProcesses[i].getRemainingTime() * 1000);
-				activeProcesses[i].setRemainingTime(0);
-				currentTime += activeProcesses[i].getRemainingTime();
+				Sleep(activeProcesses[i]->getRemainingTime() * 1000);
+				activeProcesses[i]->setRemainingTime(0);
+				currentTime += activeProcesses[i]->getRemainingTime();
 			}
 			else
 			{
-				Sleep(activeProcesses[i].getRunTime() * 1000);
-				activeProcesses[i].setRemainingTime(activeProcesses[i].getRemainingTime()-activeProcesses[i].getRunTime());
-				currentTime += activeProcesses[i].getRunTime();
+				Sleep(activeProcesses[i]->getRunTime() * 1000);
+				activeProcesses[i]->setRemainingTime(activeProcesses[i]->getRemainingTime()-activeProcesses[i]->getRunTime());
+				currentTime += activeProcesses[i]->getRunTime();
 			}
 		}
-
 	}
 }
 

@@ -10,19 +10,19 @@ class User
 private:
 	string name;
 	int numberOfProcesses;
-	Process* processList;
+	vector<Process*> processList;
 
 public:
 	User();
 	~User();
-	User(string, int, Process*);
+	User(string, int, vector<Process*>&);
 	string GetName();
 	void SetName(char);
 	int GetNumberOfProcesses();
 	void SetNumberOfProcesses(int);
 	bool IsActive();
 	int ActiveProcesses();
-	Process* GetActiveProcesses();
-	Process* GetAllProcesses();
+	vector<Process*>& GetActiveProcesses();
+	vector<Process*>& GetAllProcesses();
 	bool Completed();
 };

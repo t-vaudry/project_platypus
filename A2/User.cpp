@@ -5,7 +5,7 @@ User::User()
 {
 }
 
-User::User(string n, int numProcesses, Process* processes)
+User::User(string n, int numProcesses, vector<Process*>& processes)
 {
 	name = n;
 	numberOfProcesses = numProcesses;
@@ -41,7 +41,7 @@ bool User::IsActive()
 	bool active = false;
 	for (int i = 0; i < numberOfProcesses; i++)
 	{
-		if (processList[i].getState() != 1 && processList[i].getState() != 4)
+		if (processList[i]->getState() != 1 && processList[i]->getState() != 4)
 		{
 			active = true;
 			break;
@@ -54,27 +54,28 @@ int User::ActiveProcesses()
 {
 	int num = 0;
 	for (int i = 0; i < GetNumberOfProcesses(); i++)
-		if (processList[i].IsActive())
+		if (processList[i]->IsActive())
 			num++;
 
 	return num;
 }
 
-Process* User::GetActiveProcesses()
+vector<Process*>& User::GetActiveProcesses()
 {
-	Process* p = new Process[ActiveProcesses()];
-	int counter = 0;
+	vector<Process*> p;// = new Process[ActiveProcesses()];
+	//int counter = 0;
 	for (int i = 0; i < GetNumberOfProcesses(); i++)
-		if (processList[i].IsActive())
+		if (processList[i]->IsActive())
 		{
-			p[counter] = processList[i];
-			counter++;
+			//p[counter] = processList[i];
+			p.push_back(processList[i]);
+			//counter++;
 		}
 
 	return p;
 }
 
-Process* User::GetAllProcesses()
+vector<Process*>& User::GetAllProcesses()
 {
 	return processList;
 }
@@ -82,7 +83,7 @@ Process* User::GetAllProcesses()
 bool User::Completed()
 {
 	for (int i = 0; i < GetNumberOfProcesses(); i++)
-		if (processList[i].getState() != 1)
+		if (processList[i]->getState() != 1)
 		{
 			return false;
 		}

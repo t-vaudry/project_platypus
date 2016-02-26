@@ -10,7 +10,6 @@ private:
 	IOManager IO;
 	int timeQuantum;
 	int currentTime;
-	Process* activeProcesses;
 	vector<thread> processThreads;
 public:
 	Scheduler();

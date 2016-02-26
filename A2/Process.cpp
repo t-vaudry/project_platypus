@@ -141,28 +141,30 @@ bool Process::IsActive()
 		return false;
 }
 
-//Process& Process::operator=(Process& p)
-//{
-//	readyTime = p.readyTime;
-//	serviceTime = p.serviceTime;
-//	remainingTime = p.remainingTime;
-//	state = p.state;
-//
-//	return p;
-//}
+Process& Process::operator=(Process& p)
+{
+	readyTime = p.readyTime;
+	serviceTime = p.serviceTime;
+	remainingTime = p.remainingTime;
+	runTime = p.runTime;
+	state = p.state;
+	user = p.user;
+	ID = p.ID;
+	
+	return p;
+}
 
-void Process::Run(int currentTime, const char* path)
+void Process::Run(int& currentTime, const char* path)
 {
 	while (true)
 	{
-		state->execute(currentTime, user, ID, path);
-		currentTime++;
+		//state->execute(currentTime, user, ID, path);
 	}
 }
 
-thread Process::RunThread(int currentTime, const char* path)
+thread Process::RunThread(int& currentTime, const char* path)
 {
-	return thread([=] { Run(currentTime, path); });
+	return thread([&] {Run(ref(currentTime), path); });
 }
 
 //void Process::Initiate(int currentTime, const char* path)
