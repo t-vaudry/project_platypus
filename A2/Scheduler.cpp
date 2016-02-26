@@ -134,22 +134,24 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 		//Get time quantum per user
 		int timePerUser = timeQuantum / activeUsers;
 		vector<Process*> activeProcesses;
+		vector<Process*> p;
+		activeProcesses.clear();
+		p.clear();
 
 		for (int i = 0; i < users.size(); i++)
 		{
-			vector<Process*> p;// = users[i].GetActiveProcesses();
 			p = users[i].GetActiveProcesses();
 
-			if (users[i].ActiveProcesses() == 0)
-				break;
-
-			int timePerProcess = timePerUser / users[i].ActiveProcesses();
-
-			for (int j = 0; j < p.size(); j++)
+			if (users[i].ActiveProcesses() != 0)
 			{
-				//set the runtime of each Process
-				p[j]->setRunTime(timePerProcess);
-				activeProcesses.push_back(p[j]);
+				int timePerProcess = timePerUser / users[i].ActiveProcesses();
+
+				for (int j = 0; j < p.size(); j++)
+				{
+					//set the runtime of each Process
+					p[j]->setRunTime(timePerProcess);
+					activeProcesses.push_back(p[j]);
+				}
 			}
 
 		}
@@ -179,6 +181,13 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 				currentTime += activeProcesses[i]->getRunTime();
 			}
 		}
+
+		activeProcesses[activeProcesses.size()-1]->Suspend();
+		if (activeProcesses[activeProcesses.size()-1]->getRemainingTime() == 0)
+		{
+			activeProcesses[activeProcesses.size()-1]->Terminate();
+		}
+
 	}
 }
 

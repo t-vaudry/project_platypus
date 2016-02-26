@@ -11,6 +11,7 @@ private:
 	string name;
 	int numberOfProcesses;
 	vector<Process*> processList;
+	vector<Process*> activeProcesses;
 
 public:
 	User();

@@ -62,17 +62,18 @@ int User::ActiveProcesses()
 
 vector<Process*>& User::GetActiveProcesses()
 {
-	vector<Process*> p;// = new Process[ActiveProcesses()];
+	//vector<Process*> p();// = new Process[ActiveProcesses()];
 	//int counter = 0;
+	activeProcesses.clear();
 	for (int i = 0; i < GetNumberOfProcesses(); i++)
 		if (processList[i]->IsActive())
 		{
 			//p[counter] = processList[i];
-			p.push_back(processList[i]);
+			activeProcesses.push_back(processList[i]);
 			//counter++;
 		}
 
-	return p;
+	return activeProcesses;
 }
 
 vector<Process*>& User::GetAllProcesses()
