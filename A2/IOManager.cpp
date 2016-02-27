@@ -28,7 +28,7 @@ void IOManager::Write(string line, const char* path)
         cout << "Exception: " << str << endl;
     }
 
-    outputFile << line << endl;
+    outputFile << line;
 
     outputFile.close();
 
