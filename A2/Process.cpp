@@ -94,21 +94,27 @@ char Process::getUser()
 	return user;
 }
 
-void Process::Suspend()
+void Process::Suspend(int& time, const char* path)
 {
+	IOManager IO;
 	state = new Suspended();
+	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Paused \n";
+	IO.Write(line, path);
 }
 
-void Process::Wake(int time, const char* path)
+void Process::Wake(int& time, const char* path)
 {
+	IOManager IO;
+
 	if (dynamic_cast<Ready*>(state))
 	{
-		IOManager IO;
 		string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Started \n";
 		IO.Write(line, path);
 	}
 
 	state = new Running();
+	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Resumed \n";
+	IO.Write(line, path);
 }
 
 void Process::Activate()
@@ -117,9 +123,13 @@ void Process::Activate()
 		state = new Ready();
 }
 
-void Process::Terminate()
+void Process::Terminate(int& time, const char* path)
 {
+	IOManager IO;
 	state = new Terminated();
+	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Finished \n";
+	IO.Write(line, path);
+
 }
 
 bool Process::IsActive()

@@ -38,10 +38,10 @@ public:
 	int getState();
 	int getID();
 	char getUser();
-	void Suspend();
-	void Wake(int, const char*);
+	void Suspend(int&, const char*);
+	void Wake(int&, const char*);
 	void Activate();
-	void Terminate();
+	void Terminate(int&, const char*);
 	bool IsActive();
 	Process& operator=(Process&);
 	void Run(int&, const char*);

@@ -160,10 +160,10 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 		{
 			if( i != 0 )
 			{
-				activeProcesses[i-1]->Suspend();
+				activeProcesses[i-1]->Suspend(currentTime, outputPath);
 				if(activeProcesses[i-1]->getRemainingTime() == 0)
 				{
-					activeProcesses[i-1]->Terminate();
+					activeProcesses[i-1]->Terminate(currentTime, outputPath);
 				}
 			}
 
@@ -171,8 +171,8 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 			if(activeProcesses[i]->getRunTime() >= activeProcesses[i]->getRemainingTime())
 			{
 				Sleep(activeProcesses[i]->getRemainingTime() * 1000);
-				activeProcesses[i]->setRemainingTime(0);
 				currentTime += activeProcesses[i]->getRemainingTime();
+				activeProcesses[i]->setRemainingTime(0);
 			}
 			else
 			{
@@ -182,10 +182,10 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 			}
 		}
 
-		activeProcesses[activeProcesses.size()-1]->Suspend();
+		activeProcesses[activeProcesses.size()-1]->Suspend(currentTime, outputPath);
 		if (activeProcesses[activeProcesses.size()-1]->getRemainingTime() == 0)
 		{
-			activeProcesses[activeProcesses.size()-1]->Terminate();
+			activeProcesses[activeProcesses.size()-1]->Terminate(currentTime, outputPath);
 		}
 
 	}
