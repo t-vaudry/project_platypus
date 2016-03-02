@@ -13,7 +13,7 @@ Running::~Running()
 {
 }
 
-void Running::execute(int& time, char user, int process, const char* path)
+void Running::execute(thread::native_handle_type& threadHandler, char user, int ID)
 {
 	//if (counter == 0)
 	//{
@@ -23,5 +23,6 @@ void Running::execute(int& time, char user, int process, const char* path)
 	//}
 	//counter++;
 	//std::this_thread::sleep_for(std::chrono::seconds(1));
-	Sleep(1000);
+	ResumeThread(threadHandler);
+	//Sleep(1000);
 }

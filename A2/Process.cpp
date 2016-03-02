@@ -98,6 +98,7 @@ void Process::Suspend(int& time, const char* path)
 {
 	IOManager IO;
 	state = new Suspended();
+	state->execute(threadHandler, user, ID);
 	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Paused \n";
 	IO.Write(line, path);
 }
@@ -113,6 +114,7 @@ void Process::Wake(int& time, const char* path)
 	}
 
 	state = new Running();
+	state->execute(threadHandler, user, ID);
 	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Resumed \n";
 	IO.Write(line, path);
 }
@@ -120,13 +122,17 @@ void Process::Wake(int& time, const char* path)
 void Process::Activate()
 {
 	if (dynamic_cast<Inactive*>(state))
+	{
 		state = new Ready();
+		//state->execute(threadHandler, user, ID);
+	}
 }
 
 void Process::Terminate(int& time, const char* path)
 {
 	IOManager IO;
 	state = new Terminated();
+	state->execute(threadHandler, user, ID);
 	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Finished \n";
 	IO.Write(line, path);
 
@@ -157,13 +163,15 @@ void Process::Run(int& currentTime, const char* path)
 {
 	while (true)
 	{
-		state->execute(currentTime, user, ID, path);
+		cout << user << " " << ID << endl;
 	}
 }
 
 thread Process::RunThread(int& currentTime, const char* path)
 {
-	return thread([&] {Run(ref(currentTime), path); });
+	thread t([&] {Run(ref(currentTime), path); });
+	threadHandler = t.native_handle();
+	return t;
 }
 
 //void Process::Initiate(int currentTime, const char* path)

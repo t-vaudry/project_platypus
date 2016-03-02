@@ -11,7 +11,7 @@ Terminated::~Terminated()
 {
 }
 
-void Terminated::execute(int& time, char user, int process, const char* path)
+void Terminated::execute(thread::native_handle_type& threadHandler, char user, int ID)
 {
 	//if (counter == 0)
 	//{
@@ -20,6 +20,7 @@ void Terminated::execute(int& time, char user, int process, const char* path)
 	//	IO.Write(line, path);
 	//}
 	//counter++;
-	Sleep(1000);
+	TerminateThread(threadHandler, 0);
+	//Sleep(1000);
 
 }

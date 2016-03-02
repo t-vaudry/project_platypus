@@ -8,6 +8,6 @@ private:
 public:
     Running();
     ~Running();
-    void execute(int&, char, int, const char*);
+    void execute(thread::native_handle_type&, char, int);
 };
 

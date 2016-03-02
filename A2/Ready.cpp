@@ -11,7 +11,7 @@ Ready::~Ready()
 
 }
 
-void Ready::execute(int& time, char user, int process, const char* path)
+void Ready::execute(thread::native_handle_type& threadHandler, char user, int ID)
 {
 
 }

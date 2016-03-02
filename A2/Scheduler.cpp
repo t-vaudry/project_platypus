@@ -89,22 +89,18 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 		users.push_back(u);
 	}
 
-	for (int i = 0; i < users.size(); i++)
-	{
-		vector<Process*> userProcesses;// = users[i].GetAllProcesses();
-		userProcesses = users[i].GetAllProcesses();
-		
-		for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
-		{
-			//thread t = userProcesses[j].RunThread(currentTime, path);
-			processThreads.push_back(userProcesses[j]->RunThread(currentTime, outputPath));
-			//userProcesses[j].Initiate(currentTime, path);
-		}
-	}
-
-
-
-	int numberOfFinishedUsers = 0;
+	//for (int i = 0; i < users.size(); i++)
+	//{
+	//	vector<Process*> userProcesses;// = users[i].GetAllProcesses();
+	//	userProcesses = users[i].GetAllProcesses();
+	//	
+	//	for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
+	//	{
+	//		//thread t = userProcesses[j].RunThread(currentTime, path);
+	//		processThreads.push_back(userProcesses[j]->RunThread(currentTime, outputPath));
+	//		//userProcesses[j].Initiate(currentTime, path);
+	//	}
+	//}
 
 	//Get number of active processes for each user
 	while (true) //NEW CONDITION; should change
@@ -118,7 +114,9 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
 			{
 				if (pList[j]->getReadyTime() <= currentTime)
+				{
 					pList[j]->Activate();
+				}
 			}
 		}
 		//Get number of active users
@@ -165,6 +163,11 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 				{
 					activeProcesses[i-1]->Terminate(currentTime, outputPath);
 				}
+			}
+
+			if (activeProcesses[i]->getState() == 0)
+			{
+				processThreads.push_back(activeProcesses[i]->RunThread(currentTime, outputPath));
 			}
 
 			activeProcesses[i]->Wake(currentTime, outputPath);

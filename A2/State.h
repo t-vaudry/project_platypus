@@ -1,4 +1,5 @@
 #pragma once
+#include <thread>
 #include "IOManager.h"
 
 class State
@@ -6,5 +7,5 @@ class State
 public:
     State();
     ~State();
-    virtual void execute(int&, char, int, const char*) = 0;
+    virtual void execute(thread::native_handle_type&, char, int) = 0;
 };

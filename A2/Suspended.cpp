@@ -11,7 +11,7 @@ Suspended::~Suspended()
 {
 }
 
-void Suspended::execute(int& time, char user, int process, const char* path)
+void Suspended::execute(thread::native_handle_type& threadHandler, char user, int ID)
 {
 	//if (counter == 0)
 	//{
@@ -20,5 +20,6 @@ void Suspended::execute(int& time, char user, int process, const char* path)
 	//	IO.Write(line, path);
 	//}
 	//counter++;
-	Sleep(1000);
+	SuspendThread(threadHandler);
+	//Sleep(1000);
 }

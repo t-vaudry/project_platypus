@@ -24,4 +24,6 @@ int main(int argc, char const *argv[])
     t = s->RunThread(argv[1], argv[2]);
     t.join();
 
+	system("pause");
+
 }

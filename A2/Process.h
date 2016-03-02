@@ -21,7 +21,7 @@ private:
 	State* state;
 	int ID;
 	char user;
-	//thread processThread;
+	thread::native_handle_type threadHandler;
 
 public:
 	Process();
