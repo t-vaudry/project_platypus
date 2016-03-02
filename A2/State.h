@@ -7,5 +7,5 @@ class State
 public:
     State();
     ~State();
-    virtual void execute(thread::native_handle_type&, char, int) = 0;
+    virtual void execute(void *, char, int) = 0;
 };

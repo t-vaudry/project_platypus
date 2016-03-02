@@ -11,7 +11,7 @@ Inactive::~Inactive()
 {
 }
 
-void Inactive::execute(thread::native_handle_type& threadHandler, char user, int ID)
+void Inactive::execute(void * threadHandler, char user, int ID)
 {
 	//do nothing
 }

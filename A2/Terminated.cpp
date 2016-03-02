@@ -11,7 +11,7 @@ Terminated::~Terminated()
 {
 }
 
-void Terminated::execute(thread::native_handle_type& threadHandler, char user, int ID)
+void Terminated::execute(void * threadHandler, char user, int ID)
 {
 	//if (counter == 0)
 	//{

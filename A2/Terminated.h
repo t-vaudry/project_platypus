@@ -8,6 +8,6 @@ private:
 public:
     Terminated();
     ~Terminated();
-    void execute(thread::native_handle_type&, char, int);
+    void execute(void *, char, int);
 };
 

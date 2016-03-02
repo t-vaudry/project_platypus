@@ -167,7 +167,7 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 
 			if (activeProcesses[i]->getState() == 0)
 			{
-				processThreads.push_back(activeProcesses[i]->RunThread(currentTime, outputPath));
+				processThreads.push_back(activeProcesses[i]->RunThread(&currentTime, outputPath));
 			}
 
 			activeProcesses[i]->Wake(currentTime, outputPath);

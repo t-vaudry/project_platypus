@@ -8,7 +8,7 @@ private:
 public:
     Suspended();
     ~Suspended();
-    void execute(thread::native_handle_type&, char, int);
+    void execute(void *, char, int);
 };
 
 

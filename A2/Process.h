@@ -21,7 +21,9 @@ private:
 	State* state;
 	int ID;
 	char user;
-	thread::native_handle_type threadHandler;
+	bool notTerminated;
+	bool outputWritten;
+	void * threadHandler;
 
 public:
 	Process();
@@ -44,7 +46,7 @@ public:
 	void Terminate(int&, const char*);
 	bool IsActive();
 	Process& operator=(Process&);
-	void Run(int&, const char*);
-	thread RunThread(int&, const char*);
+	void Run(int*, const char*);
+	thread RunThread(int*, const char*);
 	//void Initiate(int, const char*);
 };

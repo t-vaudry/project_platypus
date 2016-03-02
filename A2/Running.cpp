@@ -13,7 +13,7 @@ Running::~Running()
 {
 }
 
-void Running::execute(thread::native_handle_type& threadHandler, char user, int ID)
+void Running::execute(void * threadHandler, char user, int ID)
 {
 	//if (counter == 0)
 	//{

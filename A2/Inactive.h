@@ -6,6 +6,6 @@ class Inactive :
 public:
 	Inactive();
 	~Inactive();
-	void execute(thread::native_handle_type&, char, int);
+	void execute(void *, char, int);
 };
 
