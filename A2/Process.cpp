@@ -210,8 +210,8 @@ void Process::run(int* currentTime, const char* path)
 	new_path.append( user + to_string(ID) + ".txt");
 	path = new_path.c_str();
 	srand(unsigned(time(NULL)));
-	int size = rand()%2;
-	size += 8;
+	int size = rand()%1;
+	size += 9;
 
 	nQueens(size, path, currentTime);
 }
