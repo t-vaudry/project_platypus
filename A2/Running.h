@@ -1,13 +1,13 @@
 #pragma once
 #include "State.h"
+#include <Windows.h>
+
 class Running :
     public State
 {
-private:
-    int counter;
 public:
     Running();
     ~Running();
-    void execute(void *, char, int);
+    void execute(void *);
 };
 

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -14,7 +13,7 @@ private:
 public:
     IOManager();
     ~IOManager();
-    void Write(string, const char*);
-    string Read(const char*);
+    void write(string, const char*);
+    string read(const char*);
 };
 

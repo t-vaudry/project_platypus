@@ -8,9 +8,15 @@ IOManager::~IOManager()
 {
 }
 
-void IOManager::Write(string line, const char* path)
+/*************************************************
+The write function is used to write the log
+information to the output file. The parameters are
+a string, which is the log information, and the
+path of the output file.
+*************************************************/
+void IOManager::write(string line, const char* path)
 {
-    //Open input file
+    //Open output file
     ofstream outputFile;
     outputFile.open(path, ios_base::app);
 
@@ -33,7 +39,12 @@ void IOManager::Write(string line, const char* path)
 
 }
 
-string IOManager::Read(const char* path)
+/*************************************************
+The read function is used to read the information
+from the input file. The parameter is the path of
+the input file, and the function returns a string 
+*************************************************/
+string IOManager::read(const char* path)
 {
     //Open input file
     ifstream inputFile;
@@ -44,7 +55,6 @@ string IOManager::Read(const char* path)
         if (!inputFile)
         {
             cout << "Unable to open file.\n";
-            system("pause");
             throw "No file found.";
         }
     }
@@ -52,7 +62,6 @@ string IOManager::Read(const char* path)
     {
         cout << "Exception: " << str << endl;
     }
-
 
     string returnValue;
     while (!inputFile.eof())
@@ -62,7 +71,6 @@ string IOManager::Read(const char* path)
         returnValue.append(input);
         returnValue.append("\n");
     }
-
 
     inputFile.close();
 

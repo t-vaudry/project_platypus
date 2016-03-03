@@ -1,7 +1,3 @@
-/*******************Programming Assignment 2******************/
-/*****************YOU MUST EDIT THIS FILE*********************/
-/********************Complete function nQueens****************/
-
 #include <iostream>
 #include <vector>
 #include <iomanip>
@@ -10,7 +6,7 @@
 
 using namespace std;
 
-void permutation(vector<int>, int, int, ofstream&);
+void permutation(vector<int>, int, int, ofstream&, int*);
 void swap(int *, int *);
 
 void nQueens(int BoardSize, const char* path, int* currentTime) {
@@ -26,14 +22,14 @@ void nQueens(int BoardSize, const char* path, int* currentTime) {
 	outputFile.open(path, ios_base::app);
 	outputFile << BoardSize << endl;
 
-	permutation(a, a[0], a.size(), outputFile);
+	permutation(a, a[0], a.size(), outputFile, currentTime);
 	outputFile << "Completion Time: " << *currentTime << endl;
 	outputFile.close();
 	}
 
 }
 
-void permutation(vector<int> b, int current, int size, ofstream& outputFile){
+void permutation(vector<int> b, int current, int size, ofstream& outputFile, int* currentTime){
 
 	try
     {
@@ -61,14 +57,11 @@ void permutation(vector<int> b, int current, int size, ofstream& outputFile){
 		}
 
 		if (end_function != 1){
-
-			//solutions.push_back(b);
 			for(int i=0; i<size; i++)
 			{
 				outputFile << b[i] << " ";
 			}
-			outputFile << endl;
-
+			outputFile << " Time: " << *currentTime << endl;
 		}
 	}
 
@@ -84,7 +77,7 @@ void permutation(vector<int> b, int current, int size, ofstream& outputFile){
 			b[current] = n;
 			b[i] = m;
 
-			permutation(b, current+1, size, outputFile);
+			permutation(b, current+1, size, outputFile, currentTime);
 
 			swap(&n, &m);
 

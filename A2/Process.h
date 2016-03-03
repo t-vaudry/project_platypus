@@ -1,9 +1,6 @@
 #pragma once
-
-#include <iostream>
-#include <stdlib.h>
 #include <thread>
-#include <vector>
+#include <Windows.h>
 #include "State.h"
 #include "Suspended.h"
 #include "Running.h"
@@ -16,15 +13,13 @@ using namespace std;
 class Process
 {
 private:
-	int readyTime;
+	int ReadyTime;
 	int serviceTime;
 	int remainingTime;
 	int runTime;
 	State* state;
 	int ID;
 	char user;
-	bool notTerminated;
-	bool outputWritten;
 	void * threadHandler;
 
 public:
@@ -42,13 +37,12 @@ public:
 	int getState();
 	int getID();
 	char getUser();
-	void Suspend(int&, const char*);
-	void Wake(int&, const char*);
-	void Activate();
-	void Terminate(int&, const char*);
-	bool IsActive();
+	void activate();
+	void suspend(int&, const char*);
+	void wake(int&, const char*);
+	void terminate(int&, const char*);
+	bool isActive();
 	Process& operator=(Process&);
-	void Run(int*, const char*);
-	thread RunThread(int*, const char*);
-	//void Initiate(int, const char*);
+	void run(int*, const char*);
+	thread runThread(int*, const char*);
 };

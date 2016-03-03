@@ -1,7 +1,7 @@
 #pragma once
-#include "Process.h"
 #include <string>
 #include <vector>
+#include "Process.h"
 
 using namespace std;
 
@@ -17,13 +17,13 @@ public:
 	User();
 	~User();
 	User(string, int, vector<Process*>&);
-	string GetName();
-	void SetName(char);
-	int GetNumberOfProcesses();
-	void SetNumberOfProcesses(int);
-	bool IsActive();
-	int ActiveProcesses();
-	vector<Process*>& GetActiveProcesses();
-	vector<Process*>& GetAllProcesses();
-	bool Completed();
+	string getName();
+	void setName(char);
+	int getNumberOfProcesses();
+	void setNumberOfProcesses(int);
+	bool isActive();
+	int getNumberOfActiveProcesses();
+	vector<Process*>& getActiveProcesses();
+	vector<Process*>& getAllProcesses();
+	bool isCompleted();
 };

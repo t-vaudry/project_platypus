@@ -1,6 +1,5 @@
 #include "User.h"
 
-
 User::User()
 {
 }
@@ -16,31 +15,36 @@ User::~User()
 {
 }
 
-string User::GetName()
+string User::getName()
 {
 	return name;
 }
 
-void User::SetName(char n)
+void User::setName(char n)
 {
 	name = n;
 }
 
-int User::GetNumberOfProcesses()
+int User::getNumberOfProcesses()
 {
 	return numberOfProcesses;
 }
 
-void User::SetNumberOfProcesses(int n)
+void User::setNumberOfProcesses(int n)
 {
 	numberOfProcesses = n;
 }
 
-bool User::IsActive()
+/*************************************************
+The isActive function returns a boolean value to 
+indicate if a user has at least one active process
+*************************************************/
+bool User::isActive()
 {
 	bool active = false;
 	for (int i = 0; i < numberOfProcesses; i++)
 	{
+		//States 1 and 4 are Terminated and Inactive, respectively
 		if (processList[i]->getState() != 1 && processList[i]->getState() != 4)
 		{
 			active = true;
@@ -50,40 +54,45 @@ bool User::IsActive()
 	return active;
 }
 
-int User::ActiveProcesses()
+int User::getNumberOfActiveProcesses()
 {
-	int num = 0;
-	for (int i = 0; i < GetNumberOfProcesses(); i++)
-		if (processList[i]->IsActive())
-			num++;
+	int temp = 0;
+	for (int i = 0; i < getNumberOfProcesses(); i++)
+		if (processList[i]->isActive())
+		{
+			temp++;
+		}
 
-	return num;
+	return temp;
 }
 
-vector<Process*>& User::GetActiveProcesses()
+vector<Process*>& User::getActiveProcesses()
 {
-	//vector<Process*> p();// = new Process[ActiveProcesses()];
-	//int counter = 0;
+	//Clear list upon entering function for each new time quantum
 	activeProcesses.clear();
-	for (int i = 0; i < GetNumberOfProcesses(); i++)
-		if (processList[i]->IsActive())
+
+	//Fill activeProcesses with the processes of that time quantum
+	for (int i = 0; i < getNumberOfProcesses(); i++)
+		if (processList[i]->isActive())
 		{
-			//p[counter] = processList[i];
 			activeProcesses.push_back(processList[i]);
-			//counter++;
 		}
 
 	return activeProcesses;
 }
 
-vector<Process*>& User::GetAllProcesses()
+vector<Process*>& User::getAllProcesses()
 {
 	return processList;
 }
 
-bool User::Completed()
+/*************************************************
+The isCompleted function returns a boolean value to
+indicate if a user has all terminated processes
+*************************************************/
+bool User::isCompleted()
 {
-	for (int i = 0; i < GetNumberOfProcesses(); i++)
+	for (int i = 0; i < getNumberOfProcesses(); i++)
 		if (processList[i]->getState() != 1)
 		{
 			return false;

@@ -1,8 +1,8 @@
 #pragma once
+#include <vector>
+#include <Windows.h>
 #include "User.h"
 #include "IOManager.h"
-#include <vector>
-#include <thread>
 
 class Scheduler
 {
@@ -15,12 +15,12 @@ private:
 public:
 	Scheduler();
 	~Scheduler();
-	vector<User> GetUsers();
-	void SetUsers(vector<User>);
-	int GetTimeQuantum();
-	void SetTimeQuantum(int);
-	void Run(const char*, const char*, const char*);
-	thread RunThread(const char*, const char*, const char*);
+	vector<User> getUsers();
+	void setUsers(vector<User>);
+	int getTimeQuantum();
+	void setTimeQuantum(int);
+	void run(const char*, const char*, const char*);
+	thread runThread(const char*, const char*, const char*);
 };
 
 

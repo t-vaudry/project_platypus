@@ -1,25 +1,14 @@
 #include "Suspended.h"
-#include <Windows.h>
 
 Suspended::Suspended()
 {
-	counter = 0;
 }
-
 
 Suspended::~Suspended()
 {
 }
 
-void Suspended::execute(void * threadHandler, char user, int ID)
+void Suspended::execute(void * threadHandler)
 {
-	//if (counter == 0)
-	//{
-	//	IOManager IO;
-	//	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(process) + ", Paused \n";
-	//	IO.Write(line, path);
-	//}
-	//counter++;
 	SuspendThread(threadHandler);
-	//Sleep(1000);
 }

@@ -1,47 +1,45 @@
-#include <iostream>
 #include "Process.h"
-#include <Windows.h>
 
 using namespace std;
 
-void permutation(vector<int>, int, int, ofstream&);
-void swap(int *, int *);
+//Used to demonstrate the functionality of the code.
 void nQueens(int, const char*, int*);
 
 Process::Process()
 {
-	readyTime = 0;
+	ReadyTime = 0;
 	serviceTime = 0;
 	remainingTime = 0;
 	runTime = 0;
 	ID = 0;
 	user = NULL;
 	state = new Inactive();
+	threadHandler = NULL;
 }
 
-Process::Process(int ready, int service, int id, char usr)
+Process::Process(int Ready, int service, int id, char usr)
 {
-	readyTime = ready;
+	ReadyTime = Ready;
 	serviceTime = service;
 	remainingTime = service;
 	ID = id;
 	user = usr;
 	state = new Inactive();
+	threadHandler = NULL;
 }
 
 Process::~Process()
 {
-	//processThread.join();
 }
 
 int Process::getReadyTime()
 {
-	return readyTime;
+	return ReadyTime;
 }
 
 void Process::setReadyTime(int time)
 {
-	readyTime = time;
+	ReadyTime = time;
 }
 
 int Process::getServiceTime()
@@ -84,9 +82,8 @@ int Process::getState()
 		return 2;
 	else if (dynamic_cast<Suspended*>(state))
 		return 3;
-	else
-		return 4;//inactive
-
+	else //if (dynamic_cast<Inactive*>(state))
+		return 4;
 }
 
 int Process::getID()
@@ -99,50 +96,84 @@ char Process::getUser()
 	return user;
 }
 
-void Process::Suspend(int& time, const char* path)
+/***************************************************
+The suspend function is used to suspend the process
+during execution. The function sets the state of the
+process to Suspended, executes the state function,
+which will suspend the thread of the Process, and
+then logs the information in the output file by use
+of the IOManager.
+***************************************************/
+void Process::suspend(int& time, const char* path)
 {
 	IOManager IO;
 	state = new Suspended();
-	state->execute(threadHandler, user, ID);
+	state->execute(threadHandler);
 	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Paused \n";
-	IO.Write(line, path);
+	IO.write(line, path);
 }
 
-void Process::Wake(int& time, const char* path)
+/***************************************************
+The wake function is used to wake the process during
+execution. The function sets the state of theprocess
+to Running, executes the state function, which will
+resume the thread of the Process, and then logs the
+information in the output file by use of the
+IOManager.
+***************************************************/
+void Process::wake(int& time, const char* path)
 {
 	IOManager IO;
 
+	//If the process has not started, log that it is starting in the output file.
 	if (dynamic_cast<Ready*>(state))
 	{
 		string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Started \n";
-		IO.Write(line, path);
+		IO.write(line, path);
 	}
 
 	state = new Running();
-	state->execute(threadHandler, user, ID);
+	state->execute(threadHandler);
 	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Resumed \n";
-	IO.Write(line, path);
+	IO.write(line, path);
 }
 
-void Process::Activate()
+/***************************************************
+The activate function checks if the process is in
+the Inactive state, and if so, puts it in the Ready
+state.
+***************************************************/
+void Process::activate()
 {
 	if (dynamic_cast<Inactive*>(state))
 	{
 		state = new Ready();
-		//state->execute(threadHandler, user, ID);
 	}
 }
 
-void Process::Terminate(int& time, const char* path)
+/***************************************************
+The terminate function is used to terminate the 
+process. The function sets the state of the process
+to Terminated, executes the state function, which 
+will terminate the thread of the Process, and then
+logs the information in the output file by use of 
+the IOManager.
+***************************************************/
+void Process::terminate(int& time, const char* path)
 {
 	IOManager IO;
 	state = new Terminated();
-	state->execute(threadHandler, user, ID);
+	state->execute(threadHandler);
 	string line = "Time " + to_string(time) + ", User " + user + ", Process " + to_string(ID) + ", Finished \n";
-	IO.Write(line, path);
+	IO.write(line, path);
 }
 
-bool Process::IsActive()
+/*************************************************
+The isActive function returns a boolean value to
+indicate if a process is in neither Inactive or
+Terminated.
+*************************************************/
+bool Process::isActive()
 {
 	if (getState() != 1 && getState() != 4)
 		return true;
@@ -152,32 +183,48 @@ bool Process::IsActive()
 
 Process& Process::operator=(Process& p)
 {
-	readyTime = p.readyTime;
+	ReadyTime = p.ReadyTime;
 	serviceTime = p.serviceTime;
 	remainingTime = p.remainingTime;
 	runTime = p.runTime;
 	state = p.state;
 	user = p.user;
 	ID = p.ID;
+	threadHandler = p.threadHandler;
 	
 	return p;
 }
 
-void Process::Run(int* currentTime, const char* path)
+/*************************************************
+The run function is where the process executes its
+code. In this case, the nQueens problem is solved.
+Start by creating a new path which will allow for
+multiple output files. Randomize the size of the
+board to solve the puzzle and then call the 
+function. This function is run on a thread, and
+can be interrupted by the Scheduler.
+*************************************************/
+void Process::run(int* currentTime, const char* path)
 {
 	string new_path = path; 
 	new_path.append( user + to_string(ID) + ".txt");
 	path = new_path.c_str();
-	srand(time(NULL));
-	int size = ((rand()*1000) % 9);
-	size += 10;
+	srand(unsigned(time(NULL)));
+	int size = rand()%2;
+	size += 8;
 
 	nQueens(size, path, currentTime);
 }
 
-thread Process::RunThread(int* currentTime, const char* path)
+/*************************************************
+The runThread function is used to Run the member
+function, run, of the Process in its own thread.
+It also sets the threadHandler, so that it can be
+used to Suspend, Resume and Terminate the thread.
+*************************************************/
+thread Process::runThread(int* currentTime, const char* path)
 {
-	thread t([&] {Run(currentTime, path); });
+	thread t([&] {run(currentTime, path); });
 	threadHandler = t.native_handle();
 	return t;
 }
