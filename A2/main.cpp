@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
     Scheduler* s = new Scheduler();
 
     thread t;
-    t = s->RunThread(argv[1], argv[2]);
+    t = s->RunThread(argv[1], argv[2], argv[3]);
     t.join();
 
 	system("pause");

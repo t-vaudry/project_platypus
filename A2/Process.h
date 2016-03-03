@@ -1,7 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <stdlib.h>
 #include <thread>
+#include <vector>
 #include "State.h"
 #include "Suspended.h"
 #include "Running.h"

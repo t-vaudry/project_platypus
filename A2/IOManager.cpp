@@ -19,7 +19,6 @@ void IOManager::Write(string line, const char* path)
         if (!outputFile)
         {
             cout << "Unable to open file.\n";
-            system("pause");
             throw "No file found.";
         }
     }

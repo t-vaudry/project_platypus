@@ -38,7 +38,7 @@ void Scheduler::SetTimeQuantum(int t)
 	timeQuantum = t;
 }
 
-void Scheduler::Run(const char* inputPath, const char* outputPath)
+void Scheduler::Run(const char* inputPath, const char* outputPath, const char* outputPath2)
 {
 	string input;
 	input = IO.Read(inputPath);
@@ -167,7 +167,7 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 
 			if (activeProcesses[i]->getState() == 0)
 			{
-				processThreads.push_back(activeProcesses[i]->RunThread(&currentTime, outputPath));
+				processThreads.push_back(activeProcesses[i]->RunThread(&currentTime, outputPath2));
 			}
 
 			activeProcesses[i]->Wake(currentTime, outputPath);
@@ -194,7 +194,7 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 	}
 }
 
-thread Scheduler::RunThread(const char* inputPath, const char* outputPath)
+thread Scheduler::RunThread(const char* inputPath, const char* outputPath, const char* outputPath2)
 {
-	return std::thread([=] { Run(inputPath, outputPath); });
+	return std::thread([=] { Run(inputPath, outputPath, outputPath2); });
 }

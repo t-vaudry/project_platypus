@@ -3,6 +3,7 @@
 #include "IOManager.h"
 #include <vector>
 #include <thread>
+
 class Scheduler
 {
 private:
@@ -18,8 +19,8 @@ public:
 	void SetUsers(vector<User>);
 	int GetTimeQuantum();
 	void SetTimeQuantum(int);
-	void Run(const char*, const char*);
-	thread RunThread(const char*, const char*);
+	void Run(const char*, const char*, const char*);
+	thread RunThread(const char*, const char*, const char*);
 };
 
 
