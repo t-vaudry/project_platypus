@@ -35,6 +35,12 @@ void Scheduler::setTimeQuantum(int t)
 	timeQuantum = t;
 }
 
+/*************************************************
+The run function executes all of the Scheduler's
+process scheduling mechanism. Process, which are
+run as threads, are given a fair share of time 
+to execute until every process has completed.
+*************************************************/
 void Scheduler::run(const char* inputPath, const char* outputPath, const char* processOutputPath)
 {
 	string input;
@@ -155,7 +161,7 @@ Next for loop is the scheduler executing the fair-share scheduling. Each process
 is used to run the Process for its allotted time. First check to suspend the previous process. If the
 remaining time of that process is zero, then terminate the process. Then check if that state of the
 thread is ready, if it is, start the thread of execution of that process and push it back into the
-vector of processThreads. Then wake the process for the currentTime. The simply check if the process
+vector of processThreads. Then wake the process for the currentTime. Then simply check if the process
 will run for its runTime or its remainingTime, and Sleep the scheduler for that time. Increment the
 currentTime of the Scheduler by the time slept, and set the remaining time of the Process. On the
 last pass out of the loop, suspend the last process and terminate it if completed.
