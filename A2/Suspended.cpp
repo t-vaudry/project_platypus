@@ -10,6 +10,6 @@ Suspended::~Suspended()
 
 void Suspended::execute(void * threadHandler)
 {
-	//Suspendthe execution of the current process thread
+	//Suspend the execution of the current process thread
 	SuspendThread(threadHandler);
 }
