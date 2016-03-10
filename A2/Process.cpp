@@ -122,8 +122,10 @@ void Process::Activate()
 	//{
 	//	cout << s;
 	//}
-
-	state = new Ready();
+	if (dynamic_cast<Inactive*>(state))
+		state = new Ready();
+	else
+		cout << state << endl;
 }
 
 void Process::Terminate()

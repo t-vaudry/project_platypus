@@ -87,24 +87,36 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 		//Create users
 		User u(n, numInt, processes);
 		users.push_back(u);
+	}
 
-		for (int i = 0; i < users.size(); i++)
+	for (int i = 0; i < users.size(); i++)
+	{
+		Process* userProcesses = users[i].GetAllProcesses();
+		for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
 		{
-			Process* userProcesses = users[i].GetAllProcesses();
-			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
-			{
-				//thread t = userProcesses[j].RunThread(currentTime, path);
-				processThreads.emplace_back(userProcesses[j].RunThread(currentTime, outputPath));
-				//userProcesses[j].Initiate(currentTime, path);
-			}
+			//thread t = userProcesses[j].RunThread(currentTime, path);
+			processThreads.emplace_back(userProcesses[j].RunThread(currentTime, outputPath));
+			//userProcesses[j].Initiate(currentTime, path);
 		}
 	}
+
+
 
 	int numberOfFinishedUsers = 0;
 
 	//Get number of active processes for each user
 	while (true) //NEW CONDITION; should change
 	{
+		////foreach user. foreach process. if arrival time == current time, state = ready
+		//for (int i = 0; i < users.size(); i++)
+		//{
+		//	Process* pList = users[i].GetAllProcesses();
+		//	for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
+		//	{
+		//		if (pList[j].getReadyTime() <= currentTime)
+		//			pList[j].Activate();
+		//	}
+		//}
 		//foreach user. foreach process. if arrival time == current time, state = ready
 		for (int i = 0; i < users.size(); i++)
 		{
@@ -115,7 +127,6 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 					pList[j].Activate();
 			}
 		}
-
 		//Get number of active users
 		int activeUsers = 0;
 		for (int i = 0; i < users.size(); i++)
