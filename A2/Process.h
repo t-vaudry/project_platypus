@@ -21,6 +21,7 @@ private:
 	State* state;
 	int ID;
 	char user;
+	//thread processThread;
 
 public:
 	Process();
@@ -43,6 +44,7 @@ public:
 	void Terminate();
 	bool IsActive();
 	Process& operator=(Process&);
-	void Run(int, char*);
-	void Initiate(int, const char*);
+	void Run(int, const char*);
+	thread RunThread(int, const char*);
+	//void Initiate(int, const char*);
 };

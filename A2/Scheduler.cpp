@@ -90,7 +90,11 @@ void Scheduler::Run(const char* path)
 		{
 			Process* userProcesses = users[i].GetAllProcesses();
 			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
-				userProcesses[j].Initiate(currentTime, path);
+			{
+				thread t = userProcesses[j].RunThread(currentTime, path);
+				t.join();
+				//userProcesses[j].Initiate(currentTime, path);
+			}
 		}
 	}
 

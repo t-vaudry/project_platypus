@@ -26,6 +26,7 @@ Process::Process(int ready, int service, int id, char usr)
 
 Process::~Process()
 {
+	//processThread.join();
 }
 
 int Process::getReadyTime()
@@ -148,7 +149,7 @@ Process& Process::operator=(Process& p)
 	return p;
 }
 
-void Process::Run(int currentTime, char* path)
+void Process::Run(int currentTime, const char* path)
 {
 	while (true)
 	{
@@ -157,8 +158,14 @@ void Process::Run(int currentTime, char* path)
 	}
 }
 
-void Process::Initiate(int currentTime, const char* path)
+thread Process::RunThread(int currentTime, const char* path)
 {
-	thread processThread (&Process::Run, currentTime, path, Process());
-	processThread.join();
+	return thread([=] { Run(currentTime, path); });
 }
+
+//void Process::Initiate(int currentTime, const char* path)
+//{
+//	thread processThread (&Process::Run, currentTime, path, Process());
+//	//processThread(&Process::Run, currentTime, path, Process());
+//	//processThread.join();
+//}
