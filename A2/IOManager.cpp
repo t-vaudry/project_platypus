@@ -12,7 +12,7 @@ void IOManager::Write(string line, const char* path)
 {
     //Open input file
     ofstream outputFile;
-    outputFile.open(path);
+    outputFile.open(path, ios_base::app);
 
     try
     {

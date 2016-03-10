@@ -124,7 +124,7 @@ void Scheduler::Run(const char* inputPath, const char* outputPath)
 
 		//if no users left, break
 		if(activeUsers == 0)
-			return;
+			break;
 
 		//Get time quantum per user
 		int timePerUser = timeQuantum / activeUsers;

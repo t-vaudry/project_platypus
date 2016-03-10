@@ -113,15 +113,15 @@ void Process::Wake(int time, const char* path)
 
 void Process::Activate()
 {
-	try 
-	{
-		if (!dynamic_cast<Inactive*>(state))
-			throw "ERROR";
-	}
-	catch (char* s)
-	{
-		cout << s;
-	}
+	//try 
+	//{
+	//	if (!dynamic_cast<Inactive*>(state))
+	//		throw "ERROR";
+	//}
+	//catch (char* s)
+	//{
+	//	cout << s;
+	//}
 
 	state = new Ready();
 }
