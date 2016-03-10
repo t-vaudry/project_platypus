@@ -139,15 +139,15 @@ bool Process::IsActive()
 		return false;
 }
 
-Process& Process::operator=(Process& p)
-{
-	readyTime = p.readyTime;
-	serviceTime = p.serviceTime;
-	remainingTime = p.remainingTime;
-	state = p.state;
-
-	return p;
-}
+//Process& Process::operator=(Process& p)
+//{
+//	readyTime = p.readyTime;
+//	serviceTime = p.serviceTime;
+//	remainingTime = p.remainingTime;
+//	state = p.state;
+//
+//	return p;
+//}
 
 void Process::Run(int currentTime, const char* path)
 {

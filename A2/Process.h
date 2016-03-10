@@ -43,7 +43,7 @@ public:
 	void Activate();
 	void Terminate();
 	bool IsActive();
-	Process& operator=(Process&);
+	//Process& operator=(Process&);
 	void Run(int, const char*);
 	thread RunThread(int, const char*);
 	//void Initiate(int, const char*);

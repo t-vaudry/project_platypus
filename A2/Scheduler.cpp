@@ -14,6 +14,8 @@ Scheduler::Scheduler()
 
 Scheduler::~Scheduler()
 {
+	for (int i = 0; i < processThreads.size(); i++)
+		processThreads[i].join();
 }
 
 vector<User> Scheduler::GetUsers()
@@ -36,10 +38,10 @@ void Scheduler::SetTimeQuantum(int t)
 	timeQuantum = t;
 }
 
-void Scheduler::Run(const char* path)
+void Scheduler::Run(const char* inputPath, const char* outputPath)
 {
 	string input;
-	input = IO.Read(path);
+	input = IO.Read(inputPath);
 
 	stringstream inputStream(input);
 
@@ -91,8 +93,8 @@ void Scheduler::Run(const char* path)
 			Process* userProcesses = users[i].GetAllProcesses();
 			for (int j = 0; j < users[i].GetNumberOfProcesses(); j++)
 			{
-				thread t = userProcesses[j].RunThread(currentTime, path);
-				t.join();
+				//thread t = userProcesses[j].RunThread(currentTime, path);
+				processThreads.emplace_back(userProcesses[j].RunThread(currentTime, outputPath));
 				//userProcesses[j].Initiate(currentTime, path);
 			}
 		}
@@ -133,6 +135,9 @@ void Scheduler::Run(const char* path)
 		for (int i = 0; i < users.size(); i++)
 		{
 			Process* p = users[i].GetActiveProcesses();
+
+			if (users[i].ActiveProcesses() == 0)
+				break;
 
 			int timePerProcess = timePerUser / users[i].ActiveProcesses();
 
@@ -179,7 +184,7 @@ void Scheduler::Run(const char* path)
 				}
 			}
 
-			activeProcesses[i].Wake(currentTime, path);
+			activeProcesses[i].Wake(currentTime, outputPath);
 			if(activeProcesses[i].getRunTime() >= activeProcesses[i].getRemainingTime())
 			{
 				Sleep(activeProcesses[i].getRemainingTime() * 1000);
@@ -197,7 +202,7 @@ void Scheduler::Run(const char* path)
 	}
 }
 
-thread Scheduler::RunThread(const char* path)
+thread Scheduler::RunThread(const char* inputPath, const char* outputPath)
 {
-	return std::thread([=] { Run(path); });
+	return std::thread([=] { Run(inputPath, outputPath); });
 }
