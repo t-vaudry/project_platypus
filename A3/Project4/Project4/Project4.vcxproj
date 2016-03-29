@@ -64,25 +64,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Disk.cpp" />
+    <ClCompile Include="InstructionParser.cpp" />
+    <ClCompile Include="IOManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\Disk.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\InstructionParser.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\IOManager.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\MainMemory.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\MemoryManager.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\Page.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\Process.cpp" />
-    <ClCompile Include="U:\GitHub\project_platypus\A3\Variable.cpp" />
+    <ClCompile Include="MainMemory.cpp" />
+    <ClCompile Include="MemoryManager.cpp" />
+    <ClCompile Include="Page.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="Variable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="U:\GitHub\project_platypus\A3\Disk.h" />
-    <ClInclude Include="U:\GitHub\project_platypus\A3\InstructionParser.h" />
-    <ClInclude Include="U:\GitHub\project_platypus\A3\IOManager.h" />
-    <ClInclude Include="U:\GitHub\project_platypus\A3\MainMemory.h" />
-    <ClInclude Include="U:\GitHub\project_platypus\A3\MemoryManager.h" />
-    <ClInclude Include="U:\GitHub\project_platypus\A3\Page.h" />
-    <ClInclude Include="U:\GitHub\project_platypus\A3\Process.h" />
-    <ClInclude Include="U:\GitHub\project_platypus\A3\Variable.h" />
+    <ClInclude Include="Disk.h" />
+    <ClInclude Include="InstructionParser.h" />
+    <ClInclude Include="IOManager.h" />
+    <ClInclude Include="MainMemory.h" />
+    <ClInclude Include="MemoryManager.h" />
+    <ClInclude Include="Page.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="Variable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
