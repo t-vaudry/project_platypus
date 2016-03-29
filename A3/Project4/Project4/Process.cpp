@@ -1,13 +1,8 @@
-#include <iostream>
 #include "Process.h"
-
-using namespace std;
-
 
 Process::Process()
 {
 }
-
 
 Process::~Process()
 {
@@ -50,5 +45,5 @@ thread Process::startThread()
 
 void Process::terminateThread(void* handle)
 {
-	terminateThread(handle);
+	TerminateThread(handle, 0);
 }
