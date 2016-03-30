@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "Clock.h"
+
 using namespace std;
 class InstructionParser
 {

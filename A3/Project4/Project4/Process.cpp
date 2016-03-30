@@ -1,5 +1,7 @@
 #include "Process.h"
 
+using namespace std;
+
 Process::Process()
 {
 }
@@ -40,10 +42,15 @@ int Process::getEndTime()
 
 thread Process::startThread()
 {
-	return std::thread([=] { run(); });
+	return thread([=] { run(); });
 }
 
 void Process::terminateThread(void* handle)
 {
 	TerminateThread(handle, 0);
+}
+
+void Process::run()
+{
+
 }

@@ -3,18 +3,21 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "Clock.h"
 
 using namespace std;
 
 class IOManager
 {
 private:
-	fstream inputFile;
-	fstream outputFile;
+	const char* processPath;
+	const char* memconfigPath;
+	const char* outputPath;
+	const char* diskPath;
 public:
 	IOManager();
 	~IOManager();
-	void Write(string, const char*);
-	string Read(const char*);
+	void Write(string, int);
+	string Read(int);
 };
 

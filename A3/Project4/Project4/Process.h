@@ -1,14 +1,13 @@
-#include <iostream>
-#include "Windows.h"
-#include <thread>
-
 #pragma once
+#include <iostream>
+#include <thread>
+#include "Windows.h"
+#include "Clock.h"
 
 using namespace std;
 
 class Process
 {
-
 private:
 	int ID;
 	int startTime;

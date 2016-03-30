@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Clock.h"
 
 using namespace std;
 
@@ -8,7 +9,6 @@ class Disk
 private:
 	Disk();
 	static Disk* instance;
-	string path;
 public:
 	~Disk();
 	static Disk* getInstance();

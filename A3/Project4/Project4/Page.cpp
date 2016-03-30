@@ -14,14 +14,17 @@ Page::~Page()
 {
 }
 
+void Page::setVariable(Variable newVar)
+{
+	var = newVar;
+}
+
+Variable Page::getVariable()
+{
+	return var;
+}
+
 int Page::getValue()
 {
 	return var.getValue();
 }
-
-/*Variable Page::swap(Variable newVar)
-{
-	Variable tmp = var;
-	var = newVar;
-	return tmp;
-}*/

@@ -1,4 +1,5 @@
 #include "Variable.h"
+#include "Clock.h"
 
 Variable::Variable()
 {

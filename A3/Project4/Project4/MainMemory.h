@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Clock.h"
 #include "Page.h"
 
 using namespace std;
@@ -7,11 +8,12 @@ using namespace std;
 class MainMemory
 {
 private:
-	MainMemory();
 	static MainMemory* instance;
 	Page* pages;
 	int size;
 	string path;
+	MainMemory();
+
 public:
 	~MainMemory();
 	static MainMemory* getInstance();

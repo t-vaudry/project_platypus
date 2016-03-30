@@ -10,30 +10,38 @@ MemoryManager::~MemoryManager()
 {
 }
 
+MemoryManager* MemoryManager::instance;
+
 MemoryManager* MemoryManager::getInstance()
 {
+	if (instance == NULL)
+	{
+		instance = new MemoryManager();
+	}
 	return instance;
 }
 
 void MemoryManager::store(int, int)
 {
-	//check if main memory has empty slot
-	//if yes, store in main
-	//else, store in disk
 
 }
 
 void MemoryManager::release(int)
 {
-	//search main memory
-	//if in main, delete
-	//else, search disk
-	//release
+
 }
 
 void MemoryManager::lookup(int)
 {
-	//get in main memory
-	//if null, load LRU into main
-	//get from main
+
+}
+
+void MemoryManager::swap(int id1)
+{
+	//wants to put id1 in main memory.
+	//go to main memory, find LRU
+	//write new vaiable to page
+	//get old value
+	//write old value of page to disk
+	//write to output file
 }

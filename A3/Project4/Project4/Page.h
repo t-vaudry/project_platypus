@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Clock.h"
 #include "Variable.h"
 
 using namespace std;
@@ -12,7 +13,8 @@ public:
 	Page();
 	Page(Variable);
 	~Page();
+	void setVariable(Variable);
+	Variable getVariable();
 	int getValue();
-	//Variable swap(Variable);
 };
 

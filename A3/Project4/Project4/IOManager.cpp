@@ -8,10 +8,20 @@ IOManager::~IOManager()
 {
 }
 
-void IOManager::Write(string line, const char* path)
+void IOManager::Write(string line, int mode)
 {
 	//Open input file
 	ofstream outputFile;
+	const char* path;
+
+	if (mode == 0)
+	{
+		path = outputPath;
+	}
+	else
+	{
+		path = diskPath;
+	}
 	outputFile.open(path);
 
 	try
@@ -34,10 +44,20 @@ void IOManager::Write(string line, const char* path)
 
 }
 
-string IOManager::Read(const char* path)
+string IOManager::Read(int mode)
 {
 	//Open input file
 	ifstream inputFile;
+	const char* path;
+
+	if (mode == 0)
+	{
+		path = processPath;
+	}
+	else
+	{
+		path = memconfigPath;
+	}
 	inputFile.open(path);
 
 	try

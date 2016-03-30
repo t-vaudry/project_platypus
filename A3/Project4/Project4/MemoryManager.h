@@ -1,4 +1,5 @@
 #pragma once
+#include "Clock.h"
 #include "InstructionParser.h"
 #include "Process.h"
 
@@ -16,5 +17,6 @@ public:
 	void store(int, int);
 	void release(int);
 	void lookup(int);
+	void swap(int);
 };
 

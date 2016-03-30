@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MemoryManager.h"
+#include "Clock.h"
 
 using namespace std;
 
