@@ -4,6 +4,15 @@ using namespace std;
 
 Process::Process()
 {
+	handle = NULL;
+}
+
+Process::Process(int id, int start, int end)
+{
+	ID = id;
+	startTime = start;
+	endTime = end;
+	handle = NULL;
 }
 
 Process::~Process()
@@ -42,15 +51,29 @@ int Process::getEndTime()
 
 thread Process::startThread()
 {
-	return thread([=] { run(); });
+	thread t([&] { run(); });
+	handle = t.native_handle();
+	return t;
 }
 
-void Process::terminateThread(void* handle)
+thread Process::startRunTime()
 {
+	return thread([=] { checkRunTime(); });
+}
+
+void Process::terminateThread()
+{
+	//to do if handle is NULL throw
 	TerminateThread(handle, 0);
 }
 
 void Process::run()
 {
+	//to do
+}
 
+void Process::checkRunTime()
+{
+	while (Clock::getInstance().getTime() < endTime);
+	terminateThread();
 }
