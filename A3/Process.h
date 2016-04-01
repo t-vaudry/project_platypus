@@ -26,7 +26,7 @@ public:
 	int getEndTime();
 	thread startThread();
 	thread startRunTime();
-	void terminateThread(void* handle);
+	void terminateThread();
 	void run();
 	void checkRunTime();
 };

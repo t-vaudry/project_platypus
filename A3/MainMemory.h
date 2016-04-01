@@ -11,7 +11,7 @@ private:
 	static MainMemory* instance;
 	Page* pages;
 	int size;
-	string path;
+	const char* path;
 	MainMemory();
 
 public:

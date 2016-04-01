@@ -10,14 +10,16 @@ using namespace std;
 class IOManager
 {
 private:
+	IOManager();
+	static IOManager* instance;
 	const char* processPath;
 	const char* memconfigPath;
 	const char* outputPath;
 	const char* diskPath;
 public:
-	IOManager();
 	~IOManager();
-	void Write(string, int);
-	string Read(int);
+	static IOManager* getInstance();
+	void write(string, int);
+	string read(int);
 };
 

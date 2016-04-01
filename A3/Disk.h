@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Clock.h"
+#include "IOManager.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ private:
 	static Disk* instance;
 public:
 	~Disk();
-	const char* path;
 	static Disk* getInstance();
+	void add(int, int);
 };
 

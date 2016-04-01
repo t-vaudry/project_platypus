@@ -24,7 +24,12 @@ MainMemory* MainMemory::getInstance()
 
 void MainMemory::add(int varID, int value)
 {
-
+	Page tmp = Page(varID, value);
+	for (int i = 0; i < size; i++)
+	{
+		if (pages[i].empty())
+			pages[i] = tmp;
+	}
 }
 
 int MainMemory::get(int varID)

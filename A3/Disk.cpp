@@ -2,7 +2,6 @@
 
 Disk::Disk()
 {
-	//path = ;
 }
 
 Disk::~Disk()
@@ -18,4 +17,10 @@ Disk* Disk::getInstance()
 		instance = new Disk();
 	}
 	return instance;
+}
+
+void Disk::add(int varID, int value)
+{
+	string page = to_string(varID) + ' ' + to_string(value);
+	IOManager::getInstance()->write(page, 1);
 }
