@@ -34,10 +34,21 @@ int MainMemory::get(int varID)
 
 void MainMemory::remove(int varID)
 {
-
+	for (int i = 0; i < size; i++)
+	{
+		if (pages[i].getVariable().getID() == varID)
+		{
+			pages[i] =  Page();
+		}
+	}
 }
 
 void MainMemory::load(int varID)
+{
+
+}
+
+bool MainMemory::isFull()
 {
 
 }

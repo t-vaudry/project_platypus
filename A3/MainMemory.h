@@ -21,5 +21,6 @@ public:
 	int get(int);
 	void remove(int);
 	void load(int);
+	bool isFull();
 };
 
