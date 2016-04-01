@@ -1,18 +1,17 @@
 #include "Variable.h"
-#include "Clock.h"
 
 Variable::Variable()
 {
-	ID = 0;
+	ID = -1;
 	value = 0;
 	lastAccess = 0;
 }
 
-Variable::Variable(int id, int val, int time)
+Variable::Variable(int id, int val)
 {
 	ID = id;
 	value = val;
-	lastAccess = time;
+	lastAccess = Clock::getInstance()->getTime();
 }
 
 Variable::~Variable()

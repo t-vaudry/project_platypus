@@ -11,10 +11,11 @@ private:
 	Variable var;
 public:
 	Page();
-	Page(Variable);
+	Page(int, int);
 	~Page();
 	void setVariable(Variable);
 	Variable getVariable();
+	bool empty();
 	int getValue();
 };
 

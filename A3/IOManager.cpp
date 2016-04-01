@@ -2,13 +2,28 @@
 
 IOManager::IOManager()
 {
+	//processPath = process;
+	//memconfigPath = memconfig;
+	//outputPath = output;
+	//diskPath = disk;
 }
 
 IOManager::~IOManager()
 {
 }
 
-void IOManager::Write(string line, int mode)
+IOManager* IOManager::instance;
+
+IOManager* IOManager::getInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new IOManager();
+	}
+	return instance;
+}
+
+void IOManager::write(string line, int mode)
 {
 	//Open input file
 	ofstream outputFile;
@@ -44,7 +59,7 @@ void IOManager::Write(string line, int mode)
 
 }
 
-string IOManager::Read(int mode)
+string IOManager::read(int mode)
 {
 	//Open input file
 	ifstream inputFile;

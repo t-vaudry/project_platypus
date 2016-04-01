@@ -12,7 +12,7 @@ private:
 	int lastAccess;
 public:
 	Variable();
-	Variable(int, int, int);
+	Variable(int, int);
 	~Variable();
 	void setID(int);
 	int getID();
