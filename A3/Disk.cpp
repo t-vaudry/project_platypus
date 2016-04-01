@@ -2,6 +2,7 @@
 
 Disk::Disk()
 {
+	//path = ;
 }
 
 Disk::~Disk()

@@ -11,6 +11,7 @@ private:
 	static Disk* instance;
 public:
 	~Disk();
+	const char* path;
 	static Disk* getInstance();
 };
 
