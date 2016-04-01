@@ -12,6 +12,7 @@ private:
 	ProcessManager();
 	static ProcessManager* instance;
 	Process* processes;
+	int numberOfProcesses;
 public:
 	~ProcessManager();
 	static ProcessManager* getInstance();

@@ -26,5 +26,15 @@ thread ProcessManager::startThread()
 
 void ProcessManager::run()
 {
-
+	//while (true)
+	//{
+	//	for (int i; i < numberOfProcesses; i++)
+	//	{
+	//		if (processes[i].isStarted == false && Clock::getInstance().getTime() >= processes[i].getStartTime())
+	//		{
+	//			//Start thread
+	//			//Flag process
+	//		}
+	//	}
+	//}
 }
