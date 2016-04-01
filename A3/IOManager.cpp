@@ -69,6 +69,10 @@ string IOManager::read(int mode)
 	{
 		path = processPath;
 	}
+	else if (mode == 1)
+	{
+		path = diskPath;
+	}
 	else
 	{
 		path = memconfigPath;
@@ -103,4 +107,31 @@ string IOManager::read(int mode)
 	inputFile.close();
 
 	return returnValue;
+}
+
+void IOManager::removeLine(int varID)
+{
+	ifstream disk;
+	disk.open(diskPath);
+
+	ofstream tmp;
+	tmp.open(tmpPath);
+
+	string wanted = to_string(varID); //variable to delete
+	string line; //current line
+	string lineID; //varID of current line
+	while (getline(disk, line))
+	{
+		getline(stringstream(line), lineID, ' ');
+		//if varID of line is not the desired, add the line to the temp file
+		if (lineID != wanted)
+		{
+			tmp << line << endl;
+		}
+	}
+
+	disk.close();
+	tmp.close();
+	remove(diskPath);
+	rename(tmpPath, diskPath); //replace disk file with temp file, which does not have undesired var
 }

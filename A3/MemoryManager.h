@@ -2,6 +2,8 @@
 #include "Clock.h"
 #include "InstructionParser.h"
 #include "Process.h"
+#include "MainMemory.h"
+#include "Disk.h"
 
 class MemoryManager
 {
@@ -16,7 +18,7 @@ public:
 	static MemoryManager* getInstance();
 	void store(int, int);
 	void release(int);
-	void lookup(int);
+	int lookup(int);
 	void swap(int);
 };
 

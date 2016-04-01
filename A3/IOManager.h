@@ -16,10 +16,12 @@ private:
 	const char* memconfigPath;
 	const char* outputPath;
 	const char* diskPath;
+	const char* tmpPath;
 public:
 	~IOManager();
 	static IOManager* getInstance();
 	void write(string, int);
 	string read(int);
+	void removeLine(int);
 };
 

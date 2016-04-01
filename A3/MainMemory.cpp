@@ -34,7 +34,18 @@ void MainMemory::add(int varID, int value)
 
 int MainMemory::get(int varID)
 {
-	return 0;
+	//Search for varID
+	for (int i = 0; i < size; i++)
+	{
+		//if varID is in memory, return value
+		if (pages[i].getVariable().getID() == varID)
+		{
+			return pages[i].getValue();
+		}
+	}
+
+	//else, return -1 (memoryManager will handle loading from disk to main)
+	return -1;
 }
 
 void MainMemory::remove(int varID)
@@ -50,10 +61,17 @@ void MainMemory::remove(int varID)
 
 void MainMemory::load(int varID)
 {
-
+	//Won't this just be add?
 }
 
 bool MainMemory::isFull()
 {
-
+	for (int i = 0; i < size; i++)
+	{
+		if (pages[i].empty())
+		{
+			return false;
+		}
+	}
+	return true;
 }
