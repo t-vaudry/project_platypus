@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 4/1/2016 5:19:04 PM.
      1>Project "U:\GitHub\project_platypus\A3\Assignment3\Assignment3\Assignment3.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -25,3 +26,13 @@
 Build succeeded.
 
 Time Elapsed 00:00:09.16
+=======
+﻿  ProcessManager.cpp
+  Process.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+  MemoryManager.cpp
+  Generating Code...
+  Assignment3.vcxproj -> C:\Users\anita\Documents\Tortoise\project_platypus\A3\Assignment3\Debug\Assignment3.exe
+>>>>>>> a06924597d352251e44d9eae1fee0c45eca7b8bd
