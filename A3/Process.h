@@ -12,10 +12,12 @@ private:
 	int ID;
 	int startTime;
 	int endTime;
+	void* handle;
 
 public:
 	Process();
 	~Process();
+	Process(int, int, int);
 	void setID(int);
 	int getID();
 	void setStartTime(int);
@@ -23,7 +25,9 @@ public:
 	void setEndTime(int);
 	int getEndTime();
 	thread startThread();
+	thread startRunTime();
 	void terminateThread(void* handle);
 	void run();
+	void checkRunTime();
 };
 
