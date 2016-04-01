@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <thread>
+#include <mutex>
 #include "Windows.h"
 #include "Clock.h"
 
@@ -13,6 +14,7 @@ private:
 	int startTime;
 	int endTime;
 	void* handle;
+	mutex m;
 
 public:
 	Process();
@@ -26,8 +28,9 @@ public:
 	int getEndTime();
 	thread startThread();
 	thread startRunTime();
-	void terminateThread(void* handle);
+	void terminateThread();
 	void run();
 	void checkRunTime();
+	bool isStarted;
 };
 

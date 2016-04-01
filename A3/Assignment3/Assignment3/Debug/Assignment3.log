@@ -1,13 +1,8 @@
-﻿  Variable.cpp
-  ProcessManager.cpp
+﻿  ProcessManager.cpp
   Process.cpp
-  Page.cpp
-  MemoryManager.cpp
-  MainMemory.cpp
+  Generating Code...
+  Compiling...
   main.cpp
-  IOManager.cpp
-  InstructionParser.cpp
-  Disk.cpp
-  Clock.cpp
+  MemoryManager.cpp
   Generating Code...
   Assignment3.vcxproj -> C:\Users\anita\Documents\Tortoise\project_platypus\A3\Assignment3\Debug\Assignment3.exe

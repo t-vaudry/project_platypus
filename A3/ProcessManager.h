@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <thread>
+#include <vector>
 #include "Clock.h"
 #include "Process.h"
 
@@ -13,6 +14,7 @@ private:
 	static ProcessManager* instance;
 	Process* processes;
 	int numberOfProcesses;
+	vector<thread> processThreads;
 public:
 	~ProcessManager();
 	static ProcessManager* getInstance();

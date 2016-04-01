@@ -69,11 +69,16 @@ void Process::terminateThread()
 
 void Process::run()
 {
+	isStarted = true;
+	m.lock();//try accessing m. If
 	//to do
+	m.unlock();
 }
 
 void Process::checkRunTime()
 {
-	while (Clock::getInstance().getTime() < endTime);
+	while (!isStarted);
+
+	while (Clock::getInstance()->getTime() < endTime);
 	terminateThread();
 }
