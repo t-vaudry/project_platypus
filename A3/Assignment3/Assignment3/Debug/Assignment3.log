@@ -1,8 +1,24 @@
-﻿  IOManager.cpp
-  Disk.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  ProcessManager.cpp
-  InstructionParser.cpp
-  Clock.cpp
-  Assignment3.vcxproj -> C:\Users\anita\Documents\Tortoise\project_platypus\A3\Assignment3\Debug\Assignment3.exe
+﻿Build started 2016-04-04 9:55:10 PM.
+     1>Project "C:\Users\TJ\Documents\GitHub\project_platypus\A3\Assignment3\Assignment3\Assignment3.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\Clock.cpp
+         Clock.cpp
+     1>c:\users\tj\documents\github\project_platypus\a3\clock.cpp(41): warning C4244: 'argument': conversion from 'double' to 'DWORD', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\TJ\Documents\GitHub\project_platypus\A3\Assignment3\Debug\Assignment3.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\TJ\Documents\GitHub\project_platypus\A3\Assignment3\Debug\Assignment3.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\TJ\Documents\GitHub\project_platypus\A3\Assignment3\Debug\Assignment3.lib" /MACHINE:X86 Debug\Clock.obj
+         Debug\Disk.obj
+         Debug\InstructionParser.obj
+         Debug\IOManager.obj
+         Debug\main.obj
+         Debug\MainMemory.obj
+         Debug\MemoryManager.obj
+         Debug\Page.obj
+         Debug\Process.obj
+         Debug\ProcessManager.obj
+         Debug\Variable.obj
+         Assignment3.vcxproj -> C:\Users\TJ\Documents\GitHub\project_platypus\A3\Assignment3\Debug\Assignment3.exe
+     1>Done Building Project "C:\Users\TJ\Documents\GitHub\project_platypus\A3\Assignment3\Assignment3\Assignment3.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.72

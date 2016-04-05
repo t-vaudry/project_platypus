@@ -11,6 +11,7 @@ private:
 	Clock();
 	static Clock* instance;
 	int time;
+	void * handle;
 public:
 	~Clock();
 	static Clock* getInstance();

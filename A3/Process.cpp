@@ -78,6 +78,6 @@ void Process::run()
 void Process::checkRunTime()
 {
 	while (!isStarted);
-	while (Clock::getInstance()->getTime() < endTime);
+	while (Clock::getInstance()->getTime() < endTime*1000);
 	terminateThread();
 }

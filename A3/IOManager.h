@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <mutex>
 #include "Clock.h"
 
 using namespace std;
@@ -17,6 +18,7 @@ private:
 	const char* outputPath;
 	const char* diskPath;
 	const char* tmpPath;
+	mutex m;
 public:
 	~IOManager();
 	static IOManager* getInstance();

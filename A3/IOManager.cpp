@@ -25,6 +25,7 @@ IOManager* IOManager::getInstance()
 
 void IOManager::write(string line, int mode)
 {
+	m.lock();
 	//Open input file
 	ofstream outputFile;
 	const char* path;
@@ -37,7 +38,7 @@ void IOManager::write(string line, int mode)
 	{
 		path = diskPath;
 	}
-	outputFile.open(path);
+	outputFile.open(path, ios_base::app);
 
 	try
 	{
@@ -56,6 +57,7 @@ void IOManager::write(string line, int mode)
 	outputFile << line << endl;
 
 	outputFile.close();
+	m.unlock();
 
 }
 

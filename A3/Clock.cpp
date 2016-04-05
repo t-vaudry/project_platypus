@@ -3,6 +3,7 @@
 Clock::Clock()
 {
 	time = 0;
+	handle = NULL;
 }
 
 Clock::~Clock()
@@ -27,7 +28,9 @@ int Clock::getTime()
 
 thread Clock::startThread()
 {
-	return thread([=] { run(); });
+	thread t = thread([=] { run(); });
+	handle = t.native_handle();
+	return t;
 }
 
 void Clock::run()
@@ -37,4 +40,5 @@ void Clock::run()
 		++time;
 		Sleep(1);
 	}
+	TerminateThread(handle, 0);
 }
