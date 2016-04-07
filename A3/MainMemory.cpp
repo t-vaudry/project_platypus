@@ -28,7 +28,10 @@ void MainMemory::add(int varID, int val)
 	for (int i = 0; i < size; i++)
 	{
 		if (pages[i].empty())
+		{
 			pages[i] = tmp;
+			break;
+		}
 	}
 }
 
@@ -79,7 +82,7 @@ bool MainMemory::isFull()
 
 vector<int> MainMemory::swapLRU(int newVarID, int newValue)
 {
-	int returnPage;
+	int returnPage = 0;
 	int lowestAccessTime = pages[0].getVariable().getLastAccess();
 
 	//Scan through all pages

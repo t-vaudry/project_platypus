@@ -33,7 +33,8 @@ void MemoryManager::store(int varID, int val)
 		Disk::getInstance()->add(varID, val);
 	}
 	srand(time(NULL));
-	Sleep(rand() % 1000 + 1);
+	int random = rand() % 1000 + 1;
+	Sleep(random);
 	m.unlock();
 }
 
@@ -44,7 +45,8 @@ void MemoryManager::release(int varID)
 	MainMemory::getInstance()->remove(varID);
 	Disk::getInstance()->remove(varID);
 	srand(time(NULL));
-	Sleep(rand() % 1000 + 1);
+	int random = rand() % 1000 + 1;
+	Sleep(random);
 	m.unlock();
 }
 
@@ -57,7 +59,8 @@ int MemoryManager::lookup(int varID)
 	{
 		int val = MainMemory::getInstance()->get(varID);
 		srand(time(NULL));
-		Sleep(rand() % 1000 + 1);
+		int random = rand() % 1000 + 1;
+		Sleep(random);
 		m.unlock();
 		return val;
 	}
@@ -69,7 +72,8 @@ int MemoryManager::lookup(int varID)
 		//Add to main memory
 		swap(varID,val);
 		srand(time(NULL));
-		Sleep(rand() % 1000 + 1);
+		int random = rand() % 1000 + 1;
+		Sleep(random);
 		m.unlock();
 		return val;
 	}

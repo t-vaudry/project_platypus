@@ -60,10 +60,10 @@ void ProcessManager::run()
 			if (processes[i].isStarted == false && Clock::getInstance()->getTime() >= processes[i].getStartTime())
 			{
 				processThreads.push_back(processes[i].startRunTime());
-				processThreads.back().join();
+				//processThreads.back().join();
 
 				processThreads.push_back(processes[i].startThread());
-				processThreads.back().join();
+				//processThreads.back().join();
 
 				string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(i + 1) + ": Started.";
 				IOManager::getInstance()->write(output, 0);

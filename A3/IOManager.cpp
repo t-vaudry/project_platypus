@@ -2,11 +2,12 @@
 
 IOManager::IOManager()
 {
-	//processPath = process;
-	//memconfigPath = memconfig;
-	//outputPath = output;
-	//diskPath = disk;
-	//commandPath = command;
+	processPath = "C:/Users/t_vaudry/Desktop/test/processes.txt";
+	memconfigPath = "C:/Users/t_vaudry/Desktop/test/memconfig.txt";
+	outputPath = "C:/Users/t_vaudry/Desktop/test/output.txt";
+	diskPath = "C:/Users/t_vaudry/Desktop/test/disk.txt";
+	commandPath = "C:/Users/t_vaudry/Desktop/test/commands.txt";
+	tmpPath = "C:/Users/t_vaudry/Desktop/test/tmp.txt";
 }
 
 IOManager::~IOManager()
@@ -59,7 +60,6 @@ void IOManager::write(string line, int mode)
 
 	outputFile.close();
 	m.unlock();
-
 }
 
 string IOManager::read(int mode)
@@ -120,6 +120,7 @@ string IOManager::read(int mode)
 
 string IOManager::readLineNumber(int lineNumber)
 {
+	m.lock();
 	int currLine = 0;
 	string returnString;
 	ifstream commands;
@@ -130,11 +131,13 @@ string IOManager::readLineNumber(int lineNumber)
 		if (currLine == lineNumber)
 			break;
 	}
+	m.unlock();
 	return returnString; //WARNING: no check for validity of line number
 }
 
 void IOManager::removeLine(int varID)
 {
+	m.lock();
 	ifstream disk;
 	disk.open(diskPath);
 
@@ -158,10 +161,12 @@ void IOManager::removeLine(int varID)
 	tmp.close();
 	remove(diskPath);
 	rename(tmpPath, diskPath); //replace disk file with temp file, which does not have undesired var
+	m.unlock();
 }
 
 int IOManager::getNumberOfLines()
 {
+	m.lock();
 	int numOfLines = 0;
 	string line;
 	ifstream commands;
@@ -170,11 +175,13 @@ int IOManager::getNumberOfLines()
 	{
 		numOfLines++;
 	}
+	m.unlock();
 	return numOfLines;
 }
 
 int IOManager::getValueFromDisk(int varID)
 {
+	m.lock();
 	ifstream disk;
 	disk.open(diskPath);
 
@@ -186,14 +193,40 @@ int IOManager::getValueFromDisk(int varID)
 	string lineID; //varID of current line
 	while (getline(disk, line))
 	{
-		getline(stringstream(line), lineID, ' ');
+		stringstream lineStream = stringstream(line);
+		getline(lineStream, lineID, ' ');
 		if (lineID == wanted)
 		{
-			getline(stringstream(line), varValString, ' ');
+			getline(lineStream, varValString, ' ');
 			val = stoi(varValString);
 			break;
 		}
 	}
 	disk.close();
+	m.unlock();
 	return val;
+}
+
+void IOManager::deleteFirstLine()
+{
+	m.lock();
+	ifstream commands;
+	commands.open(commandPath);
+
+	ofstream tmp;
+	tmp.open(tmpPath);
+
+	string line;
+
+	getline(commands, line);
+	while (getline(commands, line))
+	{
+		tmp << line << endl;
+	}
+
+	commands.close();
+	tmp.close();
+	remove(commandPath);
+	rename(tmpPath, commandPath); //replace disk file with temp file, which does not have undesired var
+	m.unlock();
 }

@@ -29,5 +29,6 @@ public:
 	void removeLine(int);
 	int getNumberOfLines();
 	int getValueFromDisk(int);
+	void deleteFirstLine();
 };
 

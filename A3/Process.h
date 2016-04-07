@@ -29,7 +29,6 @@ public:
 	int getID();
 	void setStartTime(int);
 	int getStartTime();
-	void setEndTime(int);
 	int getEndTime();
 	thread startThread();
 	thread startRunTime();

@@ -6,14 +6,16 @@ using namespace std;
 Process::Process()
 {
 	handle = NULL;
+	isStarted = false;
 }
 
 Process::Process(int id, int start, int end)
 {
 	ID = id;
-	startTime = start;
-	endTime = end;
+	startTime = start * 1000;
+	endTime = (start + end) * 1000;
 	handle = NULL;
+	isStarted = false;
 }
 
 Process::~Process()
@@ -32,17 +34,12 @@ int Process::getID()
 
 void Process::setStartTime(int t)
 {
-	startTime = t;
+	startTime = t * 1000;
 }
 
 int Process::getStartTime()
 {
 	return startTime;
-}
-
-void Process::setEndTime(int t)
-{
-	endTime = t;
 }
 
 int Process::getEndTime()
@@ -87,17 +84,22 @@ void Process::run()
 	InstructionParser* intParser = new InstructionParser();
 
 	int numOfLines = ioMan->getNumberOfLines();
-	int lineNumber;
 
 	while (true)
 	{
-		//Select action at random (based on line number)
-		lineNumber = rand() % numOfLines + 1;
-		command = ioMan->readLineNumber(lineNumber);
+		command = ioMan->readLineNumber(1);
+		ioMan->deleteFirstLine();
+		commandStream.clear();
 		commandStream.str(command);
 
 		//Parse instruction
 		instruction = intParser->parse(commandStream);
+
+		if (instruction.size() == 0)
+		{
+			break;
+		}
+
 
 		//Get instruction info
 		instructionNumber = instruction[0];
@@ -138,7 +140,7 @@ void Process::run()
 void Process::checkRunTime()
 {
 	while (!isStarted);
-	while (Clock::getInstance()->getTime() < endTime*1000);
+	while (Clock::getInstance()->getTime() < endTime);
 	string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Finished.";
 	IOManager::getInstance()->write(output, 0);
 	terminateThread();
@@ -147,7 +149,7 @@ void Process::checkRunTime()
 void Process::initialize(int id, int start, int end)
 {
 	ID = id;
-	startTime = start;
-	endTime = end;
+	startTime = start * 1000;
+	endTime = (start + end) * 1000;
 	handle = NULL;
 }
