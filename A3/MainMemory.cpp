@@ -41,6 +41,7 @@ int MainMemory::get(int varID)
 		//if varID is in memory, return value
 		if (pages[i].getVariable().getID() == varID)
 		{
+			pages[i].getVariable().setLastAccess();
 			return pages[i].getValue();
 		}
 	}
