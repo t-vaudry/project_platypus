@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "Clock.h"
 #include "Page.h"
 
@@ -22,6 +23,6 @@ public:
 	void remove(int);
 	void load(int, int);
 	bool isFull();
-	void removeLRUPage();
+	vector<int> swapLRU(int, int);
 };
 

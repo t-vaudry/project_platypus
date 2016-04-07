@@ -52,35 +52,17 @@ int MemoryManager::lookup(int varID)
 	else
 	{
 		//Delete from disk
-		Disk::getInstance()->remove(varID);
+		int val = Disk::getInstance()->remove(varID);
 
 		//Add to main memory
-		swap(varID);
+		swap(varID,val);
+		return val;
 	}
 }
 
-void MemoryManager::swap(int varID)
+void MemoryManager::swap(int varID, int value)
 {
-	////TODO: We should be passing variables instead of IDs everywhere because we need to write ID and value every time
-	////want to put var in main memory.
-	//int varID = var.getID();
-	//int val = var.getValue();
-
-	////Check if free page in memory
-	//if (!MainMemory::getInstance()->isFull())
-	//{
-	//	MainMemory::getInstance()->add(var);
-	//}
-	//else
-	//{
-	//	//go to main memory, find LRU
-	//	//write new variable to page
-	//	//get old value
-	//	//write old value of page to disk
-	//}
-
-	////write to output file
-	////update last access
-
-
+	vector<int> diskVar;
+	diskVar = MainMemory::getInstance()->swapLRU(varID, value);
+	Disk::getInstance()->add(diskVar[0], diskVar[1]);
 }

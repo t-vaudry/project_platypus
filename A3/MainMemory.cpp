@@ -78,7 +78,7 @@ bool MainMemory::isFull()
 	return true;
 }
 
-void MainMemory::removeLRUPage()
+vector<int> MainMemory::swapLRU(int newVarID, int newValue)
 {
 	int returnPage;
 	int lowestAccessTime = pages[0].getVariable().getLastAccess();
@@ -94,6 +94,10 @@ void MainMemory::removeLRUPage()
 		}
 	}
 
-	//Remove that page
-	//pages
+	vector<int> var;
+	var.push_back(pages[returnPage].getVariable().getID());
+	var.push_back(pages[returnPage].getValue());
+
+	pages[returnPage] = Page(newVarID, newValue);
+	return var;	
 }
