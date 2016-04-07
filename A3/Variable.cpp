@@ -38,9 +38,9 @@ int Variable::getValue()
 	return value;
 }
 
-void Variable::setLastAccess(int time)
+void Variable::setLastAccess()
 {
-	lastAccess = time;
+	lastAccess = Clock::getInstance()->getTime();
 }
 
 int Variable::getLastAccess()

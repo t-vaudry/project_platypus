@@ -21,18 +21,24 @@ MemoryManager* MemoryManager::getInstance()
 	return instance;
 }
 
-void MemoryManager::store(int, int)
+void MemoryManager::store(int varID, int val)
 {
-	//store to main if room, else store to disk?
+	//store to main if room, else store to disk
 	if (!MainMemory::getInstance()->isFull())
 	{
-		//MainMemory::getInstance()->add()
+		MainMemory::getInstance()->add(varID, val);
+	}
+	else
+	{
+		Disk::getInstance()->add(varID, val);
 	}
 }
 
-void MemoryManager::release(int)
+void MemoryManager::release(int varID)
 {
-
+	//Release from main memory and disk
+	MainMemory::getInstance()->remove(varID);
+	Disk::getInstance()->remove(varID);
 }
 
 int MemoryManager::lookup(int varID)

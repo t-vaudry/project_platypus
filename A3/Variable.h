@@ -18,7 +18,7 @@ public:
 	int getID();
 	void setValue(int);
 	int getValue();
-	void setLastAccess(int);
+	void setLastAccess();
 	int getLastAccess();
 };
 
