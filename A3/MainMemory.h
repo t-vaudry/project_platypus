@@ -17,10 +17,10 @@ private:
 public:
 	~MainMemory();
 	static MainMemory* getInstance();
-	void add(Variable&);
+	void add(int, int);
 	int get(int);
 	void remove(int);
-	void load(Variable&);
+	void load(int, int);
 	bool isFull();
 	void removeLRUPage();
 };

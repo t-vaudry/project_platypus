@@ -169,3 +169,28 @@ int IOManager::getNumberOfLines()
 	}
 	return numOfLines;
 }
+
+int IOManager::getValueFromDisk(int varID)
+{
+	ifstream disk;
+	disk.open(diskPath);
+
+	string varValString;
+	int val;
+
+	string wanted = to_string(varID); //variable to delete
+	string line; //current line
+	string lineID; //varID of current line
+	while (getline(disk, line))
+	{
+		getline(stringstream(line), lineID, ' ');
+		if (lineID == wanted)
+		{
+			getline(stringstream(line), varValString, ' ');
+			val = stoi(varValString);
+			break;
+		}
+	}
+	disk.close();
+	return val;
+}

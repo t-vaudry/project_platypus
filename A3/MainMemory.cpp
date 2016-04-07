@@ -22,10 +22,10 @@ MainMemory* MainMemory::getInstance()
 	return instance;
 }
 
-void MainMemory::add(Variable& var)
+void MainMemory::add(int varID, int val)
 {
-	Page tmp;
-	tmp.setVariable(var);
+	Page tmp(varID, val);
+
 	for (int i = 0; i < size; i++)
 	{
 		if (pages[i].empty())
@@ -60,7 +60,7 @@ void MainMemory::remove(int varID)
 	}
 }
 
-void MainMemory::load(Variable&)
+void MainMemory::load(int, int)
 {
 	//Won't this just be add?
 }

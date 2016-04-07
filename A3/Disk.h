@@ -14,6 +14,6 @@ public:
 	~Disk();
 	static Disk* getInstance();
 	void add(int, int);
-	void remove(int);
+	int remove(int);
 };
 

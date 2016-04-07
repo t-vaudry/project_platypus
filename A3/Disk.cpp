@@ -25,7 +25,9 @@ void Disk::add(int varID, int value)
 	IOManager::getInstance()->write(page, 1);
 }
 
-void Disk::remove(int varID)
+int Disk::remove(int varID)
 {
+	int returnVal = IOManager::getInstance()->getValueFromDisk(varID);
 	IOManager::getInstance()->removeLine(varID);
+	return returnVal;
 }

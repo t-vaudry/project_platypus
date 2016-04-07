@@ -24,6 +24,10 @@ MemoryManager* MemoryManager::getInstance()
 void MemoryManager::store(int, int)
 {
 	//store to main if room, else store to disk?
+	if (!MainMemory::getInstance()->isFull())
+	{
+		//MainMemory::getInstance()->add()
+	}
 }
 
 void MemoryManager::release(int)

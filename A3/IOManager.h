@@ -28,5 +28,6 @@ public:
 	string readLineNumber(int);
 	void removeLine(int);
 	int getNumberOfLines();
+	int getValueFromDisk(int);
 };
 
