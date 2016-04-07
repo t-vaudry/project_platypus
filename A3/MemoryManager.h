@@ -1,6 +1,5 @@
 #pragma once
 #include "Clock.h"
-#include "InstructionParser.h"
 #include "Process.h"
 #include "MainMemory.h"
 #include "Disk.h"
@@ -10,7 +9,6 @@ class MemoryManager
 {
 private: 
 	static MemoryManager* instance;
-	//InstructionParser parser;
 	Process* processes;
 	MemoryManager();
 
