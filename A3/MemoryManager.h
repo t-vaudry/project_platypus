@@ -1,4 +1,5 @@
 #pragma once
+#include <mutex>
 #include "Clock.h"
 #include "InstructionParser.h"
 #include "Process.h"
@@ -11,9 +12,8 @@ class MemoryManager
 private: 
 	static MemoryManager* instance;
 	//InstructionParser parser;
-	Process* processes;
 	MemoryManager();
-
+	mutex m;
 public:
 	~MemoryManager();
 	static MemoryManager* getInstance();

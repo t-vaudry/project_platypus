@@ -1,5 +1,5 @@
 #include "Process.h"
-#include "MemoryManager.h" //Needs to be here and not in .h
+#include "ProcessManager.h"
 
 using namespace std;
 
@@ -65,6 +65,7 @@ thread Process::startRunTime()
 void Process::terminateThread()
 {
 	//to do if handle is NULL throw
+	ProcessManager::getInstance()->incrementTerminatedProcesses();
 	TerminateThread(handle, 0);
 }
 
@@ -112,20 +113,25 @@ void Process::run()
 		}
 
 		//Execute action
+		string output;
 		switch (instructionNumber)
 		{
 			case 1: //Store varID, value
 				memMan->store(x1, x2);
+				output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Store: Variable " + to_string(x1) + ", Value: " + to_string(x2);
 				break;
 			case 2: //Release varID
 				memMan->release(x1);
+				output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Release: Variable " + to_string(x1);
 				break;
 			case 3: //Lookup varID
-				memMan->lookup(x1);
+				x2 = memMan->lookup(x1);
+				output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Lookup: Variable " + to_string(x1) + ", Value: " + to_string(x2);
 				break;
 			default:
 				cout << "ERROR: Invalid instruction ID";
 		}
+		IOManager::getInstance()->write(output, 0);
 	}
 }
 
@@ -133,5 +139,15 @@ void Process::checkRunTime()
 {
 	while (!isStarted);
 	while (Clock::getInstance()->getTime() < endTime*1000);
+	string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Finished.";
+	IOManager::getInstance()->write(output, 0);
 	terminateThread();
+}
+
+void Process::initialize(int id, int start, int end)
+{
+	ID = id;
+	startTime = start;
+	endTime = end;
+	handle = NULL;
 }

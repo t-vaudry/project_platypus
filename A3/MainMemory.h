@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "Clock.h"
+#include "IOManager.h"
 #include "Page.h"
 
 using namespace std;

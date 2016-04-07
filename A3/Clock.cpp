@@ -40,8 +40,10 @@ void Clock::run()
 	while (true)
 	{
 		time = clock(); //WARNING: Pausing execution does NOT pause clock
-		//++time;
-		//Sleep(1);
 	}
+}
+
+void Clock::terminate()
+{
 	TerminateThread(handle, 0);
 }

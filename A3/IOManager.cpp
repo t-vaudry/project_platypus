@@ -6,6 +6,7 @@ IOManager::IOManager()
 	//memconfigPath = memconfig;
 	//outputPath = output;
 	//diskPath = disk;
+	//commandPath = command;
 }
 
 IOManager::~IOManager()
@@ -63,6 +64,7 @@ void IOManager::write(string line, int mode)
 
 string IOManager::read(int mode)
 {
+	m.lock();
 	//Open input file
 	ifstream inputFile;
 	const char* path;
@@ -111,6 +113,7 @@ string IOManager::read(int mode)
 
 
 	inputFile.close();
+	m.unlock();
 
 	return returnValue;
 }

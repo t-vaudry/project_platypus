@@ -2,8 +2,7 @@
 
 MainMemory::MainMemory()
 {
-	//path = 
-	//size =
+	size = stoi(IOManager::getInstance()->read(2));
 	pages = new Page[size];
 }
 

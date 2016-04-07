@@ -18,5 +18,6 @@ public:
 	int getTime();
 	thread startThread();
 	void run();
+	void terminate();
 };
 

@@ -6,7 +6,7 @@
 #include "Clock.h"
 #include "IOManager.h"
 #include "InstructionParser.h"
-//#include "MemoryManager.h"
+#include "MemoryManager.h"
 #include <sstream>
 #include <random>
 
@@ -37,5 +37,6 @@ public:
 	void run();
 	void checkRunTime();
 	bool isStarted;
+	void initialize(int, int, int);
 };
 
