@@ -1,4 +1,5 @@
 #include "Clock.h"
+#include <ctime>
 
 Clock::Clock()
 {
@@ -23,7 +24,8 @@ Clock* Clock::getInstance()
 
 int Clock::getTime()
 {
-	return time;
+	return clock();
+	//return time;
 }
 
 thread Clock::startThread()
@@ -37,8 +39,9 @@ void Clock::run()
 {
 	while (true)
 	{
-		++time;
-		Sleep(1);
+		time = clock(); //WARNING: Pausing execution does NOT pause clock
+		//++time;
+		//Sleep(1);
 	}
 	TerminateThread(handle, 0);
 }
