@@ -13,7 +13,7 @@ InstructionParser::~InstructionParser()
 {
 }
 
-vector<int> InstructionParser::parse(stringstream input)
+vector<int> InstructionParser::parse(stringstream& input)
 {
 	//This method returns an integer corresponding to the instruction the string holds:
 	//1: Store

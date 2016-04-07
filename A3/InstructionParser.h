@@ -9,6 +9,6 @@ class InstructionParser
 public:
 	InstructionParser();
 	~InstructionParser();
-	vector<int> parse(stringstream);
+	vector<int> parse(stringstream&);
 };
 

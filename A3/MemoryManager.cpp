@@ -23,7 +23,7 @@ MemoryManager* MemoryManager::getInstance()
 
 void MemoryManager::store(int, int)
 {
-
+	//store to main if room, else store to disk?
 }
 
 void MemoryManager::release(int)
@@ -49,25 +49,28 @@ int MemoryManager::lookup(int varID)
 	}
 }
 
-void MemoryManager::swap(int id1)
+void MemoryManager::swap(int varID)
 {
-	//TODO: We should be passing variables instead of IDs everywhere because we need to write ID and value every time
-	//wants to put id1 in main memory.
-	//go to main memory, find LRU
-	//write new vaiable to page
-	//get old value
-	//write old value of page to disk
-	//write to output file
-	//update last access
+	////TODO: We should be passing variables instead of IDs everywhere because we need to write ID and value every time
+	////want to put var in main memory.
+	//int varID = var.getID();
+	//int val = var.getValue();
 
 	////Check if free page in memory
 	//if (!MainMemory::getInstance()->isFull())
 	//{
-	//	//TODO: We do not have the value we want to write... Put 0 as place holder for now
-	//	MainMemory::getInstance()->add(varID, 0);
+	//	MainMemory::getInstance()->add(var);
 	//}
 	//else
 	//{
-
+	//	//go to main memory, find LRU
+	//	//write new variable to page
+	//	//get old value
+	//	//write old value of page to disk
 	//}
+
+	////write to output file
+	////update last access
+
+
 }

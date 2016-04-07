@@ -4,12 +4,13 @@
 #include "Process.h"
 #include "MainMemory.h"
 #include "Disk.h"
+#include "Variable.h"
 
 class MemoryManager
 {
 private: 
 	static MemoryManager* instance;
-	InstructionParser parser;
+	//InstructionParser parser;
 	Process* processes;
 	MemoryManager();
 

@@ -22,9 +22,10 @@ MainMemory* MainMemory::getInstance()
 	return instance;
 }
 
-void MainMemory::add(int varID, int value)
+void MainMemory::add(Variable& var)
 {
-	Page tmp = Page(varID, value);
+	Page tmp;
+	tmp.setVariable(var);
 	for (int i = 0; i < size; i++)
 	{
 		if (pages[i].empty())
@@ -59,7 +60,7 @@ void MainMemory::remove(int varID)
 	}
 }
 
-void MainMemory::load(int varID)
+void MainMemory::load(Variable&)
 {
 	//Won't this just be add?
 }
@@ -74,4 +75,24 @@ bool MainMemory::isFull()
 		}
 	}
 	return true;
+}
+
+void MainMemory::removeLRUPage()
+{
+	int returnPage;
+	int lowestAccessTime = pages[0].getVariable().getLastAccess();
+
+	//Scan through all pages
+	for (int i = 1; i < size; i++)
+	{
+		//Find variable with lowest lastAccess
+		if (pages[i].getVariable().getLastAccess() < lowestAccessTime)
+		{
+			returnPage = i;
+			lowestAccessTime = pages[i].getVariable().getLastAccess();
+		}
+	}
+
+	//Remove that page
+	//pages
 }

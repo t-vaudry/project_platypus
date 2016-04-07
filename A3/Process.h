@@ -4,6 +4,11 @@
 #include <mutex>
 #include "Windows.h"
 #include "Clock.h"
+#include "IOManager.h"
+#include "InstructionParser.h"
+//#include "MemoryManager.h"
+#include <sstream>
+#include <random>
 
 using namespace std;
 

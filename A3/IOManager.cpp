@@ -75,9 +75,13 @@ string IOManager::read(int mode)
 	{
 		path = diskPath;
 	}
-	else
+	else if (mode == 2)
 	{
 		path = memconfigPath;
+	}
+	else
+	{
+		path = commandPath;
 	}
 	inputFile.open(path);
 
@@ -111,6 +115,21 @@ string IOManager::read(int mode)
 	return returnValue;
 }
 
+string IOManager::readLineNumber(int lineNumber)
+{
+	int currLine = 0;
+	string returnString;
+	ifstream commands;
+	commands.open(commandPath);
+	while (getline(commands, returnString))
+	{
+		currLine++;
+		if (currLine == lineNumber)
+			break;
+	}
+	return returnString; //WARNING: no check for validity of line number
+}
+
 void IOManager::removeLine(int varID)
 {
 	ifstream disk;
@@ -136,4 +155,17 @@ void IOManager::removeLine(int varID)
 	tmp.close();
 	remove(diskPath);
 	rename(tmpPath, diskPath); //replace disk file with temp file, which does not have undesired var
+}
+
+int IOManager::getNumberOfLines()
+{
+	int numOfLines = 0;
+	string line;
+	ifstream commands;
+	commands.open(commandPath);
+	while (getline(commands, line))
+	{
+		numOfLines++;
+	}
+	return numOfLines;
 }

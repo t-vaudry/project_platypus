@@ -17,6 +17,7 @@ private:
 	const char* memconfigPath;
 	const char* outputPath;
 	const char* diskPath;
+	const char* commandPath;
 	const char* tmpPath;
 	mutex m;
 public:
@@ -24,6 +25,8 @@ public:
 	static IOManager* getInstance();
 	void write(string, int);
 	string read(int);
+	string readLineNumber(int);
 	void removeLine(int);
+	int getNumberOfLines();
 };
 

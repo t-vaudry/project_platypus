@@ -5,7 +5,7 @@ using namespace std;
 
 #pragma once
 class Variable
-{
+{//TODO: Manage lastAccess
 private:
 	int ID;
 	int value;
