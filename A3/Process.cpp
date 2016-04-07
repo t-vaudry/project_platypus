@@ -85,7 +85,7 @@ void Process::run()
 
 	int numOfLines = ioMan->getNumberOfLines();
 
-	while (true)
+	while ((endTime - Clock::getInstance()->getTime())>1000)
 	{
 		command = ioMan->readLineNumber(1);
 		ioMan->deleteFirstLine();

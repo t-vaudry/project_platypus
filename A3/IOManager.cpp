@@ -2,12 +2,12 @@
 
 IOManager::IOManager()
 {
-	processPath = "C:/Users/t_vaudry/Desktop/test/processes.txt";
-	memconfigPath = "C:/Users/t_vaudry/Desktop/test/memconfig.txt";
-	outputPath = "C:/Users/t_vaudry/Desktop/test/output.txt";
-	diskPath = "C:/Users/t_vaudry/Desktop/test/disk.txt";
-	commandPath = "C:/Users/t_vaudry/Desktop/test/commands.txt";
-	tmpPath = "C:/Users/t_vaudry/Desktop/test/tmp.txt";
+	processPath = "C:/Users/anita/Desktop/Files/processes.txt";
+	memconfigPath = "C:/Users/anita/Desktop/Files/memconfig.txt";
+	outputPath = "C:/Users/anita/Desktop/Files/output.txt";
+	diskPath = "C:/Users/anita/Desktop/Files/disk.txt";
+	commandPath = "C:/Users/anita/Desktop/Files/commands.txt";
+	tmpPath = "C:/Users/anita/Desktop/Files/tmp.txt";
 }
 
 IOManager::~IOManager()
