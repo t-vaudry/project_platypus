@@ -20,6 +20,6 @@ public:
 	void store(int, int);
 	void release(int);
 	int lookup(int);
-	void swap(int);
+	void swap(int, int);
 };
 
