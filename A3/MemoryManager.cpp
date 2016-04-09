@@ -74,7 +74,6 @@ int MemoryManager::lookup(int varID)
 			{
 				MainMemory::getInstance()->add(varID, val);
 			}
-
 		}
 	}
 	srand(time(NULL));
@@ -86,7 +85,6 @@ int MemoryManager::lookup(int varID)
 
 void MemoryManager::swap(int varID, int value)
 {
-	//TODO: Check if spot in mainMemory first
 	vector<int> diskVar;
 	diskVar = MainMemory::getInstance()->swapLRU(varID, value);
 	Disk::getInstance()->add(diskVar[0], diskVar[1]);

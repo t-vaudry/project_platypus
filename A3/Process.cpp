@@ -147,12 +147,17 @@ void Process::run()
 void Process::checkRunTime()
 {
 	while (Clock::getInstance()->getTime() < startTime);
+
 	string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Started.";
 	IOManager::getInstance()->write(output, 0);
+
 	thread t = startThread();
+
 	while (Clock::getInstance()->getTime() < endTime);
+
 	output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Finished.";
 	IOManager::getInstance()->write(output, 0);
+
 	t.join();
 	terminateThread();
 }
