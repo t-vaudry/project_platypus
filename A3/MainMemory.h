@@ -13,7 +13,6 @@ private:
 	static MainMemory* instance;
 	Page* pages;
 	int size;
-	const char* path;
 	MainMemory();
 
 public:
@@ -22,7 +21,6 @@ public:
 	void add(int, int);
 	int get(int);
 	void remove(int);
-	void load(int, int);
 	bool isFull();
 	vector<int> swapLRU(int, int);
 };

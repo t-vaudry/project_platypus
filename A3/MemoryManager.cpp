@@ -70,8 +70,15 @@ int MemoryManager::lookup(int varID)
 		int val = Disk::getInstance()->remove(varID);
 		if (val != -1)
 		{
-			//Add to main memory
-			swap(varID, val);
+			if (MainMemory::getInstance()->isFull())
+			{
+				swap(varID, val);
+			}
+			else
+			{
+				MainMemory::getInstance()->add(varID, val);
+			}
+
 		}
 		srand(time(NULL));
 		int random = rand() % (1000 - 500) + 500;

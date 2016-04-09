@@ -63,11 +63,6 @@ void MainMemory::remove(int varID)
 	}
 }
 
-void MainMemory::load(int, int)
-{
-	//Won't this just be add?
-}
-
 bool MainMemory::isFull()
 {
 	for (int i = 0; i < size; i++)
