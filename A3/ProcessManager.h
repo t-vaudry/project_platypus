@@ -15,10 +15,11 @@ private:
 	ProcessManager();
 	static ProcessManager* instance;
 	void * handle;
-	Process* processes;
+	vector<Process> processes;
 	int numberOfProcesses;
 	int terminatedProcesses;
 	vector<thread> processThreads;
+	mutex m;
 public:
 	~ProcessManager();
 	static ProcessManager* getInstance();

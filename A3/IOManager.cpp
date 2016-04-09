@@ -186,7 +186,7 @@ int IOManager::getValueFromDisk(int varID)
 	disk.open(diskPath);
 
 	string varValString;
-	int val;
+	int val = -1;
 
 	string wanted = to_string(varID); //variable to delete
 	string line; //current line

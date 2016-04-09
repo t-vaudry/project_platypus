@@ -14,8 +14,6 @@ ProcessManager::ProcessManager()
 	getline(processStream, numProcesses);
 	numberOfProcesses = stoi(numProcesses);
 
-	processes = new Process[numberOfProcesses];
-
 	string start;
 	string end;
 
@@ -24,7 +22,9 @@ ProcessManager::ProcessManager()
 		getline(processStream, start, ' ');
 		getline(processStream, end);
 
-		processes[i].initialize(i + 1, stoi(start), stoi(end));
+		Process p; // same process p
+		p.initialize(i + 1, stoi(start), stoi(end));
+		processes.push_back(p);
 	}
 }
 
@@ -52,26 +52,27 @@ thread ProcessManager::startThread()
 
 void ProcessManager::run()
 {
-	int remainingProcesses = numberOfProcesses;
-	while (remainingProcesses > 0)
+	//while (processes.size() > 0)
+	//{
+	//	for (int i = 0; i < processes.size(); i++)
+	//	{
+	//		if (Clock::getInstance()->getTime() >= processes[i].getStartTime())
+	//		{
+	//			processThreads.push_back(processes[i].startRunTime());
+	//			//processThreads.back().join();
+
+	//			processThreads.push_back(processes[i].startThread());
+	//			//processThreads.back().join();
+
+	//			string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(processes[i].getID()) + ": Started.";
+	//			processes.erase(processes.begin()+ i, processes.begin() + i + 1);
+	//			IOManager::getInstance()->write(output, 0);
+	//		}
+	//	}
+	//}
+	for (int i = 0; i < processes.size(); i++)
 	{
-		for (int i = 0; i < numberOfProcesses; i++)
-		{
-			if (processes[i].isStarted == false && Clock::getInstance()->getTime() >= processes[i].getStartTime())
-			{
-				//lock
-				processThreads.push_back(processes[i].startRunTime());
-				//processThreads.back().join();
-
-				processThreads.push_back(processes[i].startThread());
-				//processThreads.back().join();
-				//unlock
-
-				string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(i + 1) + ": Started.";
-				IOManager::getInstance()->write(output, 0);
-				--remainingProcesses;
-			}
-		}
+		processThreads.push_back(processes[i].startRunTime());
 	}
 	while (terminatedProcesses < numberOfProcesses);
 	Clock::getInstance()->terminate();

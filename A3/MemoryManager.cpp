@@ -68,9 +68,11 @@ int MemoryManager::lookup(int varID)
 	{
 		//Delete from disk
 		int val = Disk::getInstance()->remove(varID);
-
-		//Add to main memory
-		swap(varID,val);
+		if (val != -1)
+		{
+			//Add to main memory
+			swap(varID, val);
+		}
 		srand(time(NULL));
 		int random = rand() % (1000 - 500) + 500;
 		Sleep(random);
@@ -81,6 +83,7 @@ int MemoryManager::lookup(int varID)
 
 void MemoryManager::swap(int varID, int value)
 {
+	//TODO: Check if spot in mainMemory first
 	vector<int> diskVar;
 	diskVar = MainMemory::getInstance()->swapLRU(varID, value);
 	Disk::getInstance()->add(diskVar[0], diskVar[1]);

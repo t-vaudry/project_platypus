@@ -6,7 +6,7 @@ using namespace std;
 Process::Process()
 {
 	handle = NULL;
-	isStarted = false;
+	//isStarted = false;
 }
 
 Process::Process(int id, int start, int end)
@@ -15,7 +15,7 @@ Process::Process(int id, int start, int end)
 	startTime = start * 1000;
 	endTime = (start + end) * 1000;
 	handle = NULL;
-	isStarted = false;
+	//isStarted = false;
 }
 
 Process::~Process()
@@ -68,7 +68,7 @@ void Process::terminateThread()
 
 void Process::run()
 {
-	isStarted = true;
+	//isStarted = true;
 
 	string command;
 	stringstream commandStream;
@@ -128,7 +128,14 @@ void Process::run()
 				break;
 			case 3: //Lookup varID
 				x2 = memMan->lookup(x1);
-				output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Lookup: Variable " + to_string(x1) + ", Value: " + to_string(x2);
+				if (x2 != -1)
+				{
+					output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Lookup: Variable " + to_string(x1) + ", Value: " + to_string(x2);
+				}
+				else
+				{
+					output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Lookup: Variable " + to_string(x1) + " does not exist.";
+				}
 				break;
 			default:
 				cout << "ERROR: Invalid instruction ID";
@@ -139,10 +146,14 @@ void Process::run()
 
 void Process::checkRunTime()
 {
-	while (!isStarted);
-	while (Clock::getInstance()->getTime() < endTime);
-	string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Finished.";
+	while (Clock::getInstance()->getTime() < startTime);
+	string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Started.";
 	IOManager::getInstance()->write(output, 0);
+	thread t = startThread();
+	while (Clock::getInstance()->getTime() < endTime);
+	output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Finished.";
+	IOManager::getInstance()->write(output, 0);
+	t.join();
 	terminateThread();
 }
 

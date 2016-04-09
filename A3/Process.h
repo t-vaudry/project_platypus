@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <atomic>
 #include <thread>
 #include <mutex>
 #include "Windows.h"
@@ -19,8 +20,6 @@ private:
 	int startTime;
 	int endTime;
 	void* handle;
-	mutex m;
-
 public:
 	Process();
 	~Process();
@@ -35,7 +34,8 @@ public:
 	void terminateThread();
 	void run();
 	void checkRunTime();
-	bool isStarted;
+	//atomic_bool isStarted;
 	void initialize(int, int, int);
+	//mutex m_lock;
 };
 
