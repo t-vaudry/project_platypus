@@ -60,15 +60,18 @@ int MainMemory::get(int varID)
 //Removes a variable from main memory based
 //on its variable ID. If the variable ID is
 //not found, do nothing
-void MainMemory::remove(int varID)
+int MainMemory::remove(int varID)
 {
+	int val = -1;
 	for (int i = 0; i < size; i++)
 	{
 		if (pages[i].getVariable().getID() == varID)
 		{
+			val = pages[i].getValue();
 			pages[i] =  Page();
 		}
 	}
+	return val;
 }
 
 //Returns true if every page in memory is used.

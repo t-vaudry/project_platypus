@@ -46,15 +46,27 @@ void MemoryManager::store(int varID, int val)
 //attempted to be removed from both main and disk 
 //memory. The process sleeps for a random amount of
 //time to simulate execution time.
-void MemoryManager::release(int varID)
+bool MemoryManager::release(int varID)
 {
 	m.lock();
 	//Release from main memory and disk
-	MainMemory::getInstance()->remove(varID);
-	Disk::getInstance()->remove(varID);
+	int disk, main = -1;
+	main = MainMemory::getInstance()->remove(varID);
+	disk = Disk::getInstance()->remove(varID);
+
 	srand(time(NULL));
 	int random = rand() % (1000 - 500) + 500;
 	Sleep(random);
+
+	if (disk == -1 && main == -1)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
 	m.unlock();
 }
 

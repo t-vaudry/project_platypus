@@ -20,7 +20,7 @@ public:
 	static MainMemory* getInstance();
 	void add(int, int);
 	int get(int);
-	void remove(int);
+	int remove(int);
 	bool isFull();
 	vector<int> swapLRU(int, int);
 };

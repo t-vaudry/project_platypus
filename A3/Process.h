@@ -20,7 +20,6 @@ private:
 public:
 	Process();
 	~Process();
-	Process(int, int, int);
 	void setID(int);
 	int getID();
 	void setStartTime(int);

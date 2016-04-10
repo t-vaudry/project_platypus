@@ -6,16 +6,6 @@ using namespace std;
 Process::Process()
 {
 	handle = NULL;
-	//isStarted = false;
-}
-
-Process::Process(int id, int start, int end)
-{
-	ID = id;
-	startTime = start * 1000;
-	endTime = (start + end) * 1000;
-	handle = NULL;
-	//isStarted = false;
 }
 
 Process::~Process()
@@ -61,7 +51,6 @@ thread Process::startRunTime()
 
 void Process::terminateThread()
 {
-	//to do if handle is NULL throw
 	ProcessManager::getInstance()->incrementTerminatedProcesses();
 	TerminateThread(handle, 0);
 }
@@ -71,8 +60,6 @@ void Process::terminateThread()
 //it still has time to do so.
 void Process::run()
 {
-	//isStarted = true;
-
 	string command;
 	stringstream commandStream;
 	ifstream commands;
@@ -99,23 +86,26 @@ void Process::run()
 		//Parse instruction
 		instruction = intParser->parse(commandStream);
 
-		if (instruction.size() == 0)
+		if (instruction.size() == 0 || instruction[0] == 4)
 		{
 			break;
 		}
 
-
 		//Get instruction info
 		instructionNumber = instruction[0];
-		x1 = instruction[1];
 
-		if (instructionNumber == 1)
+		if (instructionNumber != 4) //if valid instruction
 		{
-			x2 = instruction[2];
-		}
-		else
-		{
-			x2 = -1;
+			x1 = instruction[1];
+
+			if (instructionNumber == 1)
+			{
+				x2 = instruction[2];
+			}
+			else
+			{
+				x2 = -1;
+			}
 		}
 
 		//Execute action
@@ -127,8 +117,10 @@ void Process::run()
 				output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Store: Variable " + to_string(x1) + ", Value: " + to_string(x2);
 				break;
 			case 2: //Release varID
-				memMan->release(x1);
-				output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Release: Variable " + to_string(x1);
+				if (memMan->release(x1))
+					output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Release: Variable " + to_string(x1);
+				else
+					output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Release: Variable " + to_string(x1) + " does not exist.";
 				break;
 			case 3: //Lookup varID
 				x2 = memMan->lookup(x1);
@@ -142,7 +134,7 @@ void Process::run()
 				}
 				break;
 			default:
-				cout << "ERROR: Invalid instruction ID";
+				output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Invalid Instruction.";
 		}
 		IOManager::getInstance()->write(output, 0);
 	}

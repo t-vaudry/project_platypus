@@ -16,7 +16,7 @@ public:
 	~MemoryManager();
 	static MemoryManager* getInstance();
 	void store(int, int);
-	void release(int);
+	bool release(int);
 	int lookup(int);
 	void swap(int, int);
 };

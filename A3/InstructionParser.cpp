@@ -75,5 +75,11 @@ vector<int> InstructionParser::parse(stringstream& input)
 		returnVal.push_back(x1);
 	}
 
+	else //invalid instruction
+	{
+		instructCode = 4;
+		returnVal.push_back(instructCode);
+	}
+
 	return returnVal;	
 }

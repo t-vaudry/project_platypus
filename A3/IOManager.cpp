@@ -139,6 +139,21 @@ string IOManager::readLineNumber(int lineNumber)
 	string returnString;
 	ifstream commands;
 	commands.open(commandPath);
+
+	try
+	{
+		if (!commands)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
+
 	while (getline(commands, returnString))
 	{
 		currLine++;
@@ -157,8 +172,36 @@ void IOManager::removeLine(int varID)
 	ifstream disk;
 	disk.open(diskPath);
 
+	try
+	{
+		if (!disk)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
+
 	ofstream tmp;
 	tmp.open(tmpPath);
+
+	try
+	{
+		if (!tmp)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
 
 	string wanted = to_string(varID); //variable to delete
 	string line; //current line
@@ -188,6 +231,21 @@ int IOManager::getNumberOfLines()
 	string line;
 	ifstream commands;
 	commands.open(commandPath);
+
+	try
+	{
+		if (!commands)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
+
 	while (getline(commands, line))
 	{
 		numOfLines++;
@@ -203,6 +261,20 @@ int IOManager::getValueFromDisk(int varID)
 	m.lock();
 	ifstream disk;
 	disk.open(diskPath);
+
+	try
+	{
+		if (!disk)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
 
 	string varValString;
 	int val = -1;
@@ -235,8 +307,36 @@ void IOManager::deleteFirstLine()
 	ifstream commands;
 	commands.open(commandPath);
 
+	try
+	{
+		if (!commands)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
+
 	ofstream tmp;
 	tmp.open(tmpPath);
+
+	try
+	{
+		if (!tmp)
+		{
+			cout << "Unable to open file.\n";
+			system("pause");
+			throw "No file found.";
+		}
+	}
+	catch (char const* str)
+	{
+		cout << "Exception: " << str << endl;
+	}
 
 	string line;
 
