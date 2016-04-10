@@ -25,7 +25,6 @@ Clock* Clock::getInstance()
 int Clock::getTime()
 {
 	return clock();
-	//return time;
 }
 
 thread Clock::startThread()

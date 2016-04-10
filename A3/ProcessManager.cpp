@@ -1,5 +1,8 @@
 #include "ProcessManager.h"
 
+//ProcessManager constructor. Obtains all processes
+//from the process file. The processes are placed
+//in a vector.
 ProcessManager::ProcessManager()
 {
 	terminatedProcesses = 0;
@@ -50,26 +53,11 @@ thread ProcessManager::startThread()
 	return t;
 }
 
+//Starts the clock of all process threads.
+//Terminates itself once all processes have
+//been terminated.
 void ProcessManager::run()
 {
-	//while (processes.size() > 0)
-	//{
-	//	for (int i = 0; i < processes.size(); i++)
-	//	{
-	//		if (Clock::getInstance()->getTime() >= processes[i].getStartTime())
-	//		{
-	//			processThreads.push_back(processes[i].startRunTime());
-	//			//processThreads.back().join();
-
-	//			processThreads.push_back(processes[i].startThread());
-	//			//processThreads.back().join();
-
-	//			string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(processes[i].getID()) + ": Started.";
-	//			processes.erase(processes.begin()+ i, processes.begin() + i + 1);
-	//			IOManager::getInstance()->write(output, 0);
-	//		}
-	//	}
-	//}
 	for (int i = 0; i < processes.size(); i++)
 	{
 		processThreads.push_back(processes[i].startRunTime());

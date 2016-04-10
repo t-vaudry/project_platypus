@@ -21,6 +21,8 @@ MainMemory* MainMemory::getInstance()
 	return instance;
 }
 
+//Adds a variable to the next free page in memory.
+//If there is no free page, does nothing.
 void MainMemory::add(int varID, int val)
 {
 	Page tmp(varID, val);
@@ -35,6 +37,9 @@ void MainMemory::add(int varID, int val)
 	}
 }
 
+//Returns the value associated to a particular
+//variable ID stored in main memory.
+//If the variable ID is not found, return -1
 int MainMemory::get(int varID)
 {
 	//Search for varID
@@ -52,6 +57,9 @@ int MainMemory::get(int varID)
 	return -1;
 }
 
+//Removes a variable from main memory based
+//on its variable ID. If the variable ID is
+//not found, do nothing
 void MainMemory::remove(int varID)
 {
 	for (int i = 0; i < size; i++)
@@ -63,6 +71,7 @@ void MainMemory::remove(int varID)
 	}
 }
 
+//Returns true if every page in memory is used.
 bool MainMemory::isFull()
 {
 	for (int i = 0; i < size; i++)
@@ -75,6 +84,11 @@ bool MainMemory::isFull()
 	return true;
 }
 
+//Searches for the page in memory least recently accessed.
+//This page is replaced by a new page holding the newVarID
+//and newValue. The contents of the removed page are returned
+//in a vector of integers, the first containing the varID, 
+//the second holding the value.
 vector<int> MainMemory::swapLRU(int newVarID, int newValue)
 {
 	int returnPage = 0;

@@ -13,6 +13,12 @@ InstructionParser::~InstructionParser()
 {
 }
 
+//Parses through one instruction. The return is 
+//a vector of integers, with the first integer
+//corresponding to the instruction code
+//(1: Store, 2: Release, 3: Lookup) and the following
+//integer(s) corresponding to the parameters
+//of the instruction
 vector<int> InstructionParser::parse(stringstream& input)
 {
 	//This method returns an integer corresponding to the instruction the string holds:

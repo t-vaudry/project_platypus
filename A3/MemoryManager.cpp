@@ -20,6 +20,10 @@ MemoryManager* MemoryManager::getInstance()
 	return instance;
 }
 
+//Stores a variable to memory. If the main memory has
+//a free page, store in main memory. Otherwise, store
+//on disk. The process sleeps for a random amount of
+//time to simulate execution time.
 void MemoryManager::store(int varID, int val)
 {
 	m.lock();
@@ -38,6 +42,10 @@ void MemoryManager::store(int varID, int val)
 	m.unlock();
 }
 
+//Releases a variable from memory. The variable is
+//attempted to be removed from both main and disk 
+//memory. The process sleeps for a random amount of
+//time to simulate execution time.
 void MemoryManager::release(int varID)
 {
 	m.lock();
@@ -50,6 +58,12 @@ void MemoryManager::release(int varID)
 	m.unlock();
 }
 
+//Looks up a variable in memory. If the variable is
+//in main memory, return its value. Else, swap out the
+//LRU page from main memory and store it to disk and
+//place the variable with the wanted varID into
+//main memory.The process sleeps for a random amount of
+//time to simulate execution time.
 int MemoryManager::lookup(int varID)
 {
 	m.lock();
@@ -88,9 +102,9 @@ int MemoryManager::lookup(int varID)
 	}
 }
 
+//Swaps a value from the main memory to the disk.
 void MemoryManager::swap(int varID, int value)
 {
-	//TODO: Check if spot in mainMemory first
 	vector<int> diskVar;
 	diskVar = MainMemory::getInstance()->swapLRU(varID, value);
 	Disk::getInstance()->add(diskVar[0], diskVar[1]);

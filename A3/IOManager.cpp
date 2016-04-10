@@ -25,6 +25,11 @@ IOManager* IOManager::getInstance()
 	return instance;
 }
 
+//Writes to an output file. The output file to write to
+//is specified in the mode input:
+//0: output file
+//1: disk file.
+//Mutual exclusion is assured with a mutex.
 void IOManager::write(string line, int mode)
 {
 	m.lock();
@@ -62,6 +67,14 @@ void IOManager::write(string line, int mode)
 	m.unlock();
 }
 
+//Reads from a file specified by the mode input.
+//The modes correspond to:
+//0: process file
+//1: disk file
+//2: memory config file
+//3: command file
+//This function returns the entire contents
+//of the file
 string IOManager::read(int mode)
 {
 	m.lock();
@@ -118,6 +131,7 @@ string IOManager::read(int mode)
 	return returnValue;
 }
 
+//Returns the content of the line specified by lineNumber
 string IOManager::readLineNumber(int lineNumber)
 {
 	m.lock();
@@ -135,6 +149,8 @@ string IOManager::readLineNumber(int lineNumber)
 	return returnString; //WARNING: no check for validity of line number
 }
 
+//Removes a line from the disk. The line to
+//remove is specified by the variable ID
 void IOManager::removeLine(int varID)
 {
 	m.lock();
@@ -164,6 +180,7 @@ void IOManager::removeLine(int varID)
 	m.unlock();
 }
 
+//Returns the number of lines of the command file
 int IOManager::getNumberOfLines()
 {
 	m.lock();
@@ -179,6 +196,8 @@ int IOManager::getNumberOfLines()
 	return numOfLines;
 }
 
+//Searches for a vairable by variable ID and returns its value
+//Returns -1 if the variable ID is not found
 int IOManager::getValueFromDisk(int varID)
 {
 	m.lock();
@@ -207,6 +226,9 @@ int IOManager::getValueFromDisk(int varID)
 	return val;
 }
 
+//Deletes the first line of a file
+//This is used to remove commands from
+//the command file as they are used.
 void IOManager::deleteFirstLine()
 {
 	m.lock();

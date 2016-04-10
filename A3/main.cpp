@@ -10,6 +10,7 @@ using namespace std;
 
 int main(int argc, char* argv)
 {
+	//Instantiate all singletons
 	IOManager::getInstance();
 	MainMemory::getInstance();
 	Disk::getInstance();
@@ -17,8 +18,12 @@ int main(int argc, char* argv)
 	ProcessManager::getInstance();
 	Clock::getInstance();
 
+	//Start the clock
 	thread clk = Clock::getInstance()->startThread();
+	//Start the process manager
 	thread processManager = ProcessManager::getInstance()->startThread();
+
+	//Join threads to main
 	clk.join();
 	processManager.join();
 

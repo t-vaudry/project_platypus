@@ -19,7 +19,6 @@ private:
 	int numberOfProcesses;
 	int terminatedProcesses;
 	vector<thread> processThreads;
-	mutex m;
 public:
 	~ProcessManager();
 	static ProcessManager* getInstance();

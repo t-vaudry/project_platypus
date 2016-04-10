@@ -66,6 +66,9 @@ void Process::terminateThread()
 	TerminateThread(handle, 0);
 }
 
+//Executes the process. The process obtains the next
+//command from the command file and executes it, while
+//it still has time to do so.
 void Process::run()
 {
 	//isStarted = true;
@@ -85,6 +88,7 @@ void Process::run()
 
 	int numOfLines = ioMan->getNumberOfLines();
 
+	//while there is still time to execute
 	while ((endTime - Clock::getInstance()->getTime())>1000)
 	{
 		command = ioMan->readLineNumber(1);
@@ -144,19 +148,34 @@ void Process::run()
 	}
 }
 
+//Manages starting and stopping the process thread.
+//The process is started when the current time has 
+//passed the process start time. The process is
+//terminated when the current time is greater
+//than the end time.
 void Process::checkRunTime()
 {
+	//while not started, busy wait
 	while (Clock::getInstance()->getTime() < startTime);
+
+	//start thread and write to output
 	string output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Started.";
 	IOManager::getInstance()->write(output, 0);
 	thread t = startThread();
+
+	//while not ended, busy wait
 	while (Clock::getInstance()->getTime() < endTime);
+
+	//stop thread and write to output
 	output = "Clock: " + to_string(Clock::getInstance()->getTime()) + ", Process " + to_string(ID) + ": Finished.";
 	IOManager::getInstance()->write(output, 0);
 	t.join();
 	terminateThread();
 }
 
+//Initialize the process with given values. The end time
+//is determined to be the sum of the start time and
+//the burst time.
 void Process::initialize(int id, int start, int end)
 {
 	ID = id;
