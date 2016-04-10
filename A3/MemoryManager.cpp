@@ -69,19 +69,15 @@ int MemoryManager::lookup(int varID)
 	m.lock();
 	//Search in main memory
 	//if in main memory, return value
+	int val = 0;
 	if (MainMemory::getInstance()->get(varID) != -1)
 	{
-		int val = MainMemory::getInstance()->get(varID);
-		srand(time(NULL));
-		int random = rand() % (1000 - 500) + 500;
-		Sleep(random);
-		m.unlock();
-		return val;
+		val = MainMemory::getInstance()->get(varID);
 	}
 	else
 	{
 		//Delete from disk
-		int val = Disk::getInstance()->remove(varID);
+		val = Disk::getInstance()->remove(varID);
 		if (val != -1)
 		{
 			if (MainMemory::getInstance()->isFull())
@@ -92,14 +88,13 @@ int MemoryManager::lookup(int varID)
 			{
 				MainMemory::getInstance()->add(varID, val);
 			}
-
 		}
-		srand(time(NULL));
-		int random = rand() % (1000 - 500) + 500;
-		Sleep(random);
-		m.unlock();
-		return val;
 	}
+	srand(time(NULL));
+	int random = rand() % (1000 - 500) + 500;
+	Sleep(random);
+	m.unlock();
+	return val;
 }
 
 //Swaps a value from the main memory to the disk.
